@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+build/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# WordPress
+*.bak

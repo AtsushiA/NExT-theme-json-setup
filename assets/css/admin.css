@@ -1,0 +1,549 @@
+/* ==========================================================================
+   NExT theme.json Setup — 管理画面スタイル
+   OnyX ライクな設定 UI
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ラップ・全体レイアウト
+   -------------------------------------------------------------------------- */
+
+.ntjs-wrap {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	color: #1d2327;
+	/* WordPress の .wrap マージンをリセット */
+	margin-left: -20px;
+	margin-right: -20px;
+}
+
+/* --------------------------------------------------------------------------
+   ヘッダー
+   -------------------------------------------------------------------------- */
+
+.ntjs-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 24px;
+	background: #fff;
+	border-bottom: 1px solid #dcdcde;
+	gap: 16px;
+}
+
+.ntjs-header-left {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	flex: 1;
+	min-width: 0;
+}
+
+.ntjs-title {
+	font-size: 16px !important;
+	font-weight: 600 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	color: #1d2327;
+	white-space: nowrap;
+}
+
+.ntjs-meta {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 12px;
+	color: #50575e;
+}
+
+.ntjs-meta-theme {
+	white-space: nowrap;
+}
+
+.ntjs-header-right {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   バッジ
+   -------------------------------------------------------------------------- */
+
+.ntjs-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
+	border-radius: 20px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+.ntjs-badge--active {
+	background: #dceeff;
+	color: #0073aa;
+	border: 1px solid #b3d5ef;
+}
+
+.ntjs-badge--custom {
+	background: #eef4fb;
+	color: #2271b1;
+	border: 1px solid #c2d9f0;
+	font-size: 10px;
+	padding: 1px 7px;
+}
+
+/* --------------------------------------------------------------------------
+   ボタン
+   -------------------------------------------------------------------------- */
+
+.ntjs-btn {
+	padding: 6px 14px;
+	border-radius: 4px;
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	border: 1px solid transparent;
+	line-height: 1.5;
+	transition: background 0.15s, color 0.15s;
+}
+
+.ntjs-btn--primary {
+	background: #2271b1;
+	color: #fff;
+	border-color: #2271b1;
+}
+
+.ntjs-btn--primary:hover:not(:disabled) {
+	background: #135e96;
+	border-color: #135e96;
+}
+
+.ntjs-btn--primary:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.ntjs-btn--ghost {
+	background: transparent;
+	color: #b32d2e;
+	border-color: #dcdcde;
+}
+
+.ntjs-btn--ghost:hover {
+	background: #fcf0f1;
+	border-color: #d63638;
+}
+
+/* --------------------------------------------------------------------------
+   タブ
+   -------------------------------------------------------------------------- */
+
+.ntjs-tabs {
+	display: flex;
+	background: #f6f7f7;
+	border-bottom: 1px solid #dcdcde;
+	padding: 0 24px;
+	gap: 0;
+}
+
+.ntjs-tab {
+	padding: 10px 18px;
+	background: none;
+	border: none;
+	border-bottom: 3px solid transparent;
+	cursor: pointer;
+	font-size: 13px;
+	color: #50575e;
+	margin-bottom: -1px;
+	transition: color 0.15s;
+}
+
+.ntjs-tab:hover {
+	color: #1d2327;
+}
+
+.ntjs-tab.active {
+	color: #2271b1;
+	border-bottom-color: #2271b1;
+	font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   パネル（共通）
+   -------------------------------------------------------------------------- */
+
+.ntjs-panel {
+	background: #f0f0f1;
+	min-height: calc(100vh - 180px);
+}
+
+/* --------------------------------------------------------------------------
+   設定パネル（OnyX 風 2 カラムレイアウト）
+   -------------------------------------------------------------------------- */
+
+.ntjs-app-body {
+	display: flex;
+	min-height: calc(100vh - 180px);
+}
+
+/* --- サイドバー --- */
+
+.ntjs-sidebar {
+	width: 200px;
+	flex-shrink: 0;
+	background: #f6f7f7;
+	border-right: 1px solid #dcdcde;
+	padding: 12px 0;
+	position: sticky;
+	top: 32px; /* WP 管理バーの高さ */
+	height: calc(100vh - 180px);
+	overflow-y: auto;
+}
+
+.ntjs-nav-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	padding: 9px 16px;
+	background: none;
+	border: none;
+	border-left: 3px solid transparent;
+	cursor: pointer;
+	font-size: 13px;
+	color: #50575e;
+	text-align: left;
+	transition: background 0.1s, color 0.1s;
+}
+
+.ntjs-nav-item:hover {
+	background: #eaecf0;
+	color: #1d2327;
+}
+
+.ntjs-nav-item.is-active {
+	background: #fff;
+	color: #2271b1;
+	border-left-color: #2271b1;
+	font-weight: 600;
+}
+
+.ntjs-nav-icon {
+	font-size: 14px;
+	width: 18px;
+	text-align: center;
+	flex-shrink: 0;
+	color: #787c82;
+}
+
+.ntjs-nav-item.is-active .ntjs-nav-icon {
+	color: #2271b1;
+}
+
+.ntjs-nav-label {
+	flex: 1;
+}
+
+.ntjs-nav-count {
+	background: #2271b1;
+	color: #fff;
+	border-radius: 10px;
+	font-size: 10px;
+	font-weight: 700;
+	padding: 1px 6px;
+	min-width: 18px;
+	text-align: center;
+}
+
+/* --- メインコンテンツ --- */
+
+.ntjs-content {
+	flex: 1;
+	padding: 0;
+	min-width: 0;
+	background: #f0f0f1;
+}
+
+.ntjs-content-header {
+	padding: 20px 28px 12px;
+	border-bottom: 1px solid #dcdcde;
+	background: #f6f7f7;
+}
+
+.ntjs-content-title {
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	margin: 0 !important;
+	color: #1d2327;
+}
+
+/* --------------------------------------------------------------------------
+   設定行
+   -------------------------------------------------------------------------- */
+
+.ntjs-setting-list {
+	padding: 12px 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.ntjs-setting-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 14px 18px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	transition: border-color 0.15s;
+}
+
+.ntjs-setting-row:hover {
+	border-color: #b3d5ef;
+}
+
+.ntjs-setting-row.is-overridden {
+	border-left: 3px solid #2271b1;
+	padding-left: 16px;
+}
+
+/* 左側：テキスト情報 */
+
+.ntjs-setting-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.ntjs-setting-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 3px;
+}
+
+.ntjs-setting-desc {
+	font-size: 12px;
+	color: #50575e;
+	line-height: 1.5;
+}
+
+.ntjs-setting-theme-val {
+	font-size: 11px;
+	color: #787c82;
+	margin-top: 4px;
+	font-style: italic;
+}
+
+/* 右側：コントロール */
+
+.ntjs-setting-control {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   iOS 風トグルスイッチ
+   -------------------------------------------------------------------------- */
+
+.ntjs-switch {
+	position: relative;
+	display: inline-block;
+	width: 46px;
+	height: 26px;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.ntjs-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	position: absolute;
+}
+
+.ntjs-switch-track {
+	position: absolute;
+	inset: 0;
+	background: #c8c9ca;
+	border-radius: 26px;
+	transition: background 0.2s;
+}
+
+.ntjs-switch-track::before {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	left: 3px;
+	top: 3px;
+	background: #fff;
+	border-radius: 50%;
+	transition: transform 0.2s;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.ntjs-switch input:checked + .ntjs-switch-track {
+	background: #2271b1;
+}
+
+.ntjs-switch input:checked + .ntjs-switch-track::before {
+	transform: translateX(20px);
+}
+
+.ntjs-switch input:focus-visible + .ntjs-switch-track {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   クリアボタン
+   -------------------------------------------------------------------------- */
+
+.ntjs-clear-btn {
+	background: none;
+	border: none;
+	color: #787c82;
+	font-size: 11px;
+	cursor: pointer;
+	padding: 2px 4px;
+	border-radius: 3px;
+	white-space: nowrap;
+	transition: color 0.15s;
+}
+
+.ntjs-clear-btn:hover {
+	color: #d63638;
+	background: #fcf0f1;
+}
+
+/* --------------------------------------------------------------------------
+   Raw JSON / テーマ参照パネル
+   -------------------------------------------------------------------------- */
+
+#ntjs-panel-raw,
+#ntjs-panel-reference {
+	padding: 20px 24px;
+}
+
+.ntjs-hint {
+	font-size: 13px;
+	color: #50575e;
+	margin: 0 0 12px;
+	line-height: 1.6;
+}
+
+#ntjs-raw-editor,
+#ntjs-theme-editor {
+	width: 100%;
+	min-height: 520px;
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 12px;
+	line-height: 1.65;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 12px;
+	resize: vertical;
+	box-sizing: border-box;
+	background: #fff;
+}
+
+#ntjs-raw-editor:focus {
+	border-color: #2271b1;
+	outline: none;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+#ntjs-theme-editor {
+	background: #f6f7f7;
+	color: #50575e;
+}
+
+.ntjs-invalid {
+	border-color: #d63638 !important;
+	box-shadow: 0 0 0 1px #d63638 !important;
+}
+
+/* --------------------------------------------------------------------------
+   通知
+   -------------------------------------------------------------------------- */
+
+.ntjs-notice {
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.5;
+	white-space: nowrap;
+}
+
+.ntjs-notice--success {
+	background: #edfaef;
+	border: 1px solid #00a32a;
+	color: #007017;
+}
+
+.ntjs-notice--error {
+	background: #fcf0f1;
+	border: 1px solid #d63638;
+	color: #b32d2e;
+}
+
+/* --------------------------------------------------------------------------
+   レスポンシブ対応
+   -------------------------------------------------------------------------- */
+
+@media screen and ( max-width: 960px ) {
+	.ntjs-sidebar {
+		width: 160px;
+	}
+
+	.ntjs-nav-label {
+		font-size: 12px;
+	}
+}
+
+@media screen and ( max-width: 782px ) {
+	.ntjs-app-body {
+		flex-direction: column;
+	}
+
+	.ntjs-sidebar {
+		width: 100%;
+		height: auto;
+		position: static;
+		display: flex;
+		flex-wrap: wrap;
+		padding: 8px;
+		gap: 4px;
+		border-right: none;
+		border-bottom: 1px solid #dcdcde;
+	}
+
+	.ntjs-nav-item {
+		width: auto;
+		border-left: none;
+		border-radius: 4px;
+		padding: 6px 12px;
+	}
+
+	.ntjs-nav-item.is-active {
+		background: #2271b1;
+		color: #fff;
+		border-left: none;
+	}
+
+	.ntjs-nav-item.is-active .ntjs-nav-icon {
+		color: #fff;
+	}
+
+	.ntjs-header {
+		flex-wrap: wrap;
+	}
+}
