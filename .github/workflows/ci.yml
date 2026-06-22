@@ -61,10 +61,14 @@ jobs:
       - name: Install WordPress test suite
         # 引数: <db-name> <db-user> <db-pass> <db-host> <wp-version> <skip-db-create>
         run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 ${{ matrix.wp }} true
-      - name: Run PHPUnit
+      # Unit テストは WordPress 非依存（Brain Monkey）。WP を読み込む統合用 bootstrap で
+      # 走らせると get_option() が先に定義され Patchwork が再定義できずに失敗するため分離する。
+      - name: Run unit tests
+        run: vendor/bin/phpunit --testsuite unit
+      - name: Run integration tests
         env:
           WP_TESTS_DIR: /tmp/wordpress-tests-lib
-        run: vendor/bin/phpunit --bootstrap tests/phpunit/bootstrap.php
+        run: vendor/bin/phpunit --testsuite integration --bootstrap tests/phpunit/bootstrap.php
 
   plugin-check:
     name: Plugin Check
