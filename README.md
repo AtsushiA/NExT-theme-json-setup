@@ -117,6 +117,57 @@ NExT-theme-json-setup/
 
 ---
 
+## 開発
+
+### 必要ツール
+
+- Node.js 18+ / npm
+- Composer
+- Docker（`@wordpress/env` 用）
+
+### セットアップ
+
+```bash
+composer install   # phpcs / phpunit などの開発依存
+npm install        # wp-env / Playwright / husky
+npx wp-env start   # ローカル開発環境（dev: :8888 / tests: :8889）
+```
+
+`npm install` 時に husky の pre-commit フックが有効化され、コミット前にステージした PHP ファイルへ phpcs が実行されます。
+
+### コーディング規約チェック（phpcs）
+
+```bash
+composer run phpcs   # チェック
+composer run phpcbf  # 自動修正
+```
+
+### PHPUnit テスト
+
+```bash
+# Unit テスト（WordPress 非依存・ローカルで実行）
+composer run test:unit
+
+# Integration テスト（wp-env の tests 環境で実行）
+npx wp-env run tests-cli --env-cwd=wp-content/plugins/NExT-theme-json-setup \
+  vendor/bin/phpunit --testsuite integration --bootstrap=tests/phpunit/bootstrap.php
+```
+
+### E2E テスト（Playwright）
+
+```bash
+npx playwright install chromium  # 初回のみ
+npx wp-env start
+npm run test:e2e
+```
+
+### CI / リリース
+
+- `.github/workflows/ci.yml` — push / PR で phpcs・PHPUnit（WP 最新 + 6.8 × PHP 8.3 / 8.4）・Plugin Check・E2E を実行
+- `.github/workflows/release.yml` — `0.0.0` 形式のタグ push で配布用 zip を生成し GitHub Release を作成（タグとプラグインヘッダーの Version 一致を検証）
+
+---
+
 ## ライセンス
 
 GPL-2.0-or-later

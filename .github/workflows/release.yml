@@ -1,0 +1,79 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+env:
+  # ディレクトリ名（NExT-theme-json-setup）と配布スラッグが異なるため明示する。
+  PLUGIN_SLUG: next-theme-json-setup
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version from tag
+        id: meta
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          echo "version=${REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify version in plugin header
+        env:
+          TAG_VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          HEADER_VERSION=$(grep -oP 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' "${PLUGIN_SLUG}.php")
+          if [ "$HEADER_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Tag version ($TAG_VERSION) does not match plugin header version ($HEADER_VERSION)"
+            exit 1
+          fi
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Build plugin zip
+        env:
+          TAG_VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.husky' \
+            --exclude='node_modules' \
+            --exclude='vendor' \
+            --exclude='bin' \
+            --exclude='tests' \
+            --exclude='debug.log' \
+            --exclude='db.sql' \
+            --exclude='.wp-env.json' \
+            --exclude='.wp-env.override.json' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='composer.json' \
+            --exclude='composer.lock' \
+            --exclude='phpcs.xml.dist' \
+            --exclude='phpunit.xml.dist' \
+            --exclude='playwright.config.ts' \
+            --exclude='.distignore' \
+            --exclude='.gitignore' \
+            --exclude='.editorconfig' \
+            --exclude='CLAUDE.md' \
+            --exclude='SPEC.md' \
+            ./ "${PLUGIN_SLUG}/"
+          zip -r "${PLUGIN_SLUG}-${TAG_VERSION}.zip" "${PLUGIN_SLUG}/"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.PLUGIN_SLUG }}-${{ steps.meta.outputs.version }}.zip
+          generate_release_notes: true
