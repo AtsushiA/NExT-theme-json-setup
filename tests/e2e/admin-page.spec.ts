@@ -20,4 +20,15 @@ test.describe( 'NExT theme.json Setup admin page', () => {
 		const appearanceMenu = page.locator( '#menu-appearance' );
 		await expect( appearanceMenu ).toContainText( 'theme.json' );
 	} );
+
+	test( 'v3 で追加された「背景」カテゴリが表示される', async ( { admin, page } ) => {
+		await admin.visitAdminPage(
+			'themes.php',
+			'page=next-theme-json-setup'
+		);
+
+		// サイドバーは REST 取得後に描画される.
+		const sidebar = page.locator( '#ntjs-sidebar' );
+		await expect( sidebar.locator( '.ntjs-nav-item', { hasText: '背景' } ) ).toBeVisible();
+	} );
 } );

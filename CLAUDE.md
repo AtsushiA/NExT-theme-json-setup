@@ -7,7 +7,7 @@
 
 - **プラグイン名**: NExT theme.json Setup
 - **スラッグ / テキストドメイン**: `next-theme-json-setup`
-- **必要 WP バージョン**: 6.5+
+- **必要 WP バージョン**: 6.6+（theme.json v3）
 
 ## ディレクトリ構成
 
@@ -76,4 +76,5 @@ default < blocks < theme < user ← プラグインはここに注入
 | 2026-03-25 | テーマファイル非破壊方式に変更。wp_theme_json_data_user フィルター + wp_options 保存に移行。WPCS 違反修正・ファイルリネーム対応 |
 | 2026-03-25 | トグルスイッチ UI 実装。theme.json v3 のブール設定 32 項目をカテゴリ別に列挙。OnyX 風サイドバー＋設定行デザイン。 |
 | 2026-03-25 | セキュリティ・実装レビュー対応。uninstall.php 追加、フルパス漏洩修正、ペイロードサイズ制限・アローリスト追加、is_admin() ガード追加。 |
-| 2026-06-22 | テスト・リリース環境整備（wp-plugin-dev スキル）。composer/npm/wp-env/phpcs/phpunit（Unit 3・Integration 12）/Playwright e2e（3）/husky pre-commit/GitHub Actions CI・Release を追加。phpcs は日本語コメント前提で体裁系 4 sniff を除外。wp-env は file mapping を外し、tests 環境は lifecycleScripts.afterStart で自動有効化。 |
+| 2026-06-22 | テスト・リリース環境整備（wp-plugin-dev スキル）。composer/npm/wp-env/phpcs/phpunit（Unit 3・Integration 12）/Playwright e2e（3）/husky pre-commit/GitHub Actions CI・Release を追加。phpcs は日本語コメント前提で体裁系 4 sniff を除外。wp-env は file mapping を外し、tests 環境は lifecycleScripts.afterStart で自動有効化。CI 修正: composer platform を PHP 8.0 固定、Plugin Check に slug 指定＋plugin_repo 除外、MySQL に DB 作成させ Unit/Integration を分離実行。v0.1.0 リリース。 |
+| 2026-06-22 | theme.json v3 対応の差分更新（v0.2.0）。SPEC.md を非破壊オーバーライド方式＋v3 に全面改訂。admin.js のトグルを 35→45 に拡充（background、color.heading/button/caption、dimensions.aspectRatio/defaultAspectRatios、spacing.defaultSpacingSizes、typography.textAlign/defaultFontSizes）。v3 のフル機能に合わせ最低 WP を 6.6 に引き上げ（ヘッダー/phpcs/README/CLAUDE）。 |

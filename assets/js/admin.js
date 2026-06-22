@@ -6,7 +6,7 @@
 	const { apiBase, nonce, i18n } = nextThemeJsonSetup;
 
 	// =========================================================================
-	// 設定スキーマ定義（theme.json v3 のブール設定 32 項目）
+	// 設定スキーマ定義（theme.json v3 のブール設定をカテゴリ別に列挙）
 	// key: ネストしたパスをキーの配列で表現（'core/image' のようなスラッシュ含むキーに対応）
 	// wpDefault: WordPress 本体のデフォルト値
 	// =========================================================================
@@ -26,6 +26,25 @@
 					key: [ 'settings', 'useRootPaddingAwareAlignments' ],
 					label: 'ルートパディング対応の整列',
 					description: 'コンテンツのパディングを考慮し、フルワイドブロックが正しく端まで伸びるよう調整します。',
+					wpDefault: false,
+				},
+			],
+		},
+		{
+			id: 'background',
+			label: '背景',
+			icon: '▤',
+			settings: [
+				{
+					key: [ 'settings', 'background', 'backgroundImage' ],
+					label: '背景画像',
+					description: 'ブロックに背景画像を設定できるようにします。WordPress 6.5 以降で利用可能。',
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'background', 'backgroundSize' ],
+					label: '背景画像のサイズ・位置',
+					description: '背景画像のサイズ・繰り返し・位置（focal point）を設定できるようにします。WordPress 6.6 以降で利用可能。',
 					wpDefault: false,
 				},
 			],
@@ -120,6 +139,24 @@
 					description: 'ブロックのテキスト色を Site Editor で設定できるようにします。',
 					wpDefault: true,
 				},
+				{
+					key: [ 'settings', 'color', 'heading' ],
+					label: '見出しカラー',
+					description: '見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'color', 'button' ],
+					label: 'ボタンカラー',
+					description: 'ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'color', 'caption' ],
+					label: 'キャプションカラー',
+					description: 'キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					wpDefault: false,
+				},
 			],
 		},
 		{
@@ -193,6 +230,18 @@
 					description: '縦書きなどのテキスト方向を Site Editor で設定できるようにします。',
 					wpDefault: false,
 				},
+				{
+					key: [ 'settings', 'typography', 'textAlign' ],
+					label: 'テキスト配置',
+					description: 'テキストの左揃え・中央揃え・右揃えを Site Editor で設定できるようにします。WordPress 6.6 以降で利用可能。',
+					wpDefault: true,
+				},
+				{
+					key: [ 'settings', 'typography', 'defaultFontSizes' ],
+					label: 'デフォルトフォントサイズ',
+					description: 'WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。',
+					wpDefault: true,
+				},
 			],
 		},
 		{
@@ -224,6 +273,12 @@
 					description: 'ブロックの内側の余白（padding）を Site Editor で設定できるようにします。',
 					wpDefault: false,
 				},
+				{
+					key: [ 'settings', 'spacing', 'defaultSpacingSizes' ],
+					label: 'デフォルトスペーシングサイズ',
+					description: 'WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。',
+					wpDefault: true,
+				},
 			],
 		},
 		{
@@ -236,6 +291,18 @@
 					label: '最小高さ（min-height）',
 					description: '対応ブロックの最小高さを Site Editor で設定できるようにします。',
 					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'dimensions', 'aspectRatio' ],
+					label: 'アスペクト比',
+					description: '対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。',
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'dimensions', 'defaultAspectRatios' ],
+					label: 'デフォルトアスペクト比プリセット',
+					description: 'WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。',
+					wpDefault: true,
 				},
 			],
 		},
