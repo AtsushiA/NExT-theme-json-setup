@@ -3,6 +3,17 @@
     "description": "Override and apply a theme's theme.json from the WordPress admin without modifying theme files.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/AtsushiA/NExT-theme-json-setup",
+    "authors": [
+        {
+            "name": "NExT",
+            "homepage": "https://next-season.net"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/AtsushiA/NExT-theme-json-setup/issues",
+        "source": "https://github.com/AtsushiA/NExT-theme-json-setup"
+    },
     "require": {
         "php": ">=8.0"
     },

@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name:       NExT theme.json Setup
- * Plugin URI:        https://github.com/
+ * Plugin URI:        https://github.com/AtsushiA/NExT-theme-json-setup
  * Description:       有効化されているテーマの theme.json を管理画面から GUI で閲覧・編集・保存できるプラグイン。テーマファイルは書き換えず、オーバーライド設定として DB に保存して適用します。
  * Version:           0.1.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            NExT
+ * Author URI:        https://next-season.net
  * Text Domain:       next-theme-json-setup
  * Domain Path:       /languages
  *
