@@ -27,8 +27,9 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          # MYSQL_DATABASE は指定しない。指定すると install-wp-tests.sh が
-          # 既存 DB 扱いで対話入力を求め CI が止まるため、第6引数 true で作成をスキップする。
+          # MySQL サービスに DB を作らせ、install-wp-tests.sh は第6引数 true で作成をスキップする。
+          # （DB が存在し作成もスキップするため、スクリプトの対話入力プロンプトには到達しない。）
+          MYSQL_DATABASE: wordpress_test
         ports:
           - 3306:3306
         options: >-
@@ -76,11 +77,11 @@ jobs:
           # 正規の小文字スラッグ（= テキストドメイン）を明示する.
           slug: next-theme-json-setup
           exclude-directories: 'vendor,tests,node_modules'
+          # wp.org には公開せず GitHub Release で配布するため plugin_repo カテゴリは対象外.
           categories: |
             general
             performance
             accessibility
-            plugin_repo
             security
 
   e2e:

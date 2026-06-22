@@ -8,6 +8,8 @@
  * Requires PHP:      8.0
  * Author:            NExT
  * Author URI:        https://next-season.net
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       next-theme-json-setup
  * Domain Path:       /languages
  *
