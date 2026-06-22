@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ruleset name="NExT theme.json Setup">
+    <description>Coding standards for NExT theme.json Setup.</description>
+
+    <!-- 対象ファイル. -->
+    <file>./next-theme-json-setup.php</file>
+    <file>./uninstall.php</file>
+    <file>./includes/</file>
+
+    <!-- 除外. -->
+    <exclude-pattern>./vendor/*</exclude-pattern>
+    <exclude-pattern>./node_modules/*</exclude-pattern>
+    <exclude-pattern>./tests/*</exclude-pattern>
+
+    <!-- WordPress Coding Standards. -->
+    <rule ref="WordPress">
+        <!-- コメントは日本語で記述するため、英語前提の体裁チェックは除外する. -->
+        <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop"/>
+        <exclude name="Generic.Commenting.DocComment.ShortNotCapital"/>
+        <exclude name="Generic.Commenting.DocComment.LongNotCapital"/>
+    </rule>
+
+    <!-- PHP 互換性チェック. -->
+    <rule ref="PHPCompatibilityWP"/>
+
+    <!-- サポートする PHP バージョン範囲（プラグインヘッダーの Requires PHP に合わせる）. -->
+    <config name="testVersion" value="8.0-"/>
+
+    <!-- テキストドメイン. -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="next-theme-json-setup"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- グローバルプレフィックス. -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="next_theme_json_setup"/>
+                <element value="Next_Theme_Json"/>
+                <element value="NEXT_THEME_JSON_SETUP"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- 最低 WP バージョン. -->
+    <config name="minimum_wp_version" value="6.5"/>
+</ruleset>

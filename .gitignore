@@ -26,3 +26,15 @@ npm-debug.log*
 
 # WordPress
 *.bak
+
+# wp-env
+.wp-env.override.json
+debug.log
+db.sql
+
+# Test cache / reports
+.phpunit.result.cache
+test-results/
+playwright-report/
+blob-report/
+tests/e2e/.auth/

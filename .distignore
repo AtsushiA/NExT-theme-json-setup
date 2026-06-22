@@ -1,0 +1,24 @@
+# Files and directories excluded from the distributed plugin zip.
+.git
+.github
+.husky
+.gitignore
+.distignore
+.editorconfig
+.wp-env.json
+.wp-env.override.json
+node_modules
+vendor
+bin
+tests
+debug.log
+db.sql
+package.json
+package-lock.json
+composer.json
+composer.lock
+phpcs.xml.dist
+phpunit.xml.dist
+playwright.config.ts
+CLAUDE.md
+SPEC.md
