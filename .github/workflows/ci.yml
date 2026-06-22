@@ -72,6 +72,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wordpress/plugin-check-action@v1
         with:
+          # チェックアウト先ディレクトリ名（NExT-theme-json-setup）ではなく、
+          # 正規の小文字スラッグ（= テキストドメイン）を明示する.
+          slug: next-theme-json-setup
           exclude-directories: 'vendor,tests,node_modules'
           categories: |
             general
