@@ -48,5 +48,5 @@
     </rule>
 
     <!-- 最低 WP バージョン. -->
-    <config name="minimum_wp_version" value="6.5"/>
+    <config name="minimum_wp_version" value="6.6"/>
 </ruleset>

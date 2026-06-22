@@ -1,6 +1,6 @@
 {
     "name": "next-theme-json-setup",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "NExT theme.json Setup — development tooling (wp-env, e2e, linting).",
     "private": true,
     "scripts": {

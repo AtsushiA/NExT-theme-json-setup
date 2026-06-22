@@ -8,22 +8,41 @@
 | **スラッグ** | next-theme-json-setup |
 | **テキストドメイン** | next-theme-json-setup |
 | **ディレクトリ名** | NExT-theme-json-setup |
+| **バージョン** | 0.2.0 |
 
 ---
 
 ## 参考ドキュメント
 
-https://developer.wordpress.org/themes/global-settings-and-styles/
+- Global Settings and Styles（テーマハンドブック）: https://developer.wordpress.org/themes/global-settings-and-styles/
+- theme.json リファレンス（Living: 最新 v3）: https://developer.wordpress.org/block-editor/reference-guides/theme-json-reference/theme-json-living/
 
 ---
 
 ## 目的
 
-有効化されているテーマの `theme.json` を WordPress 管理画面から **GUI で閲覧・編集・保存** できるプラグイン。
+有効化されているテーマの `theme.json` 設定を WordPress 管理画面から **GUI で閲覧・編集・保存** できるプラグイン。
+**テーマファイルは一切書き換えない。** オーバーライド設定を DB に保存し、フィルターフックで実行時に適用する。
 
 ---
 
-## theme.json の主要構造
+## アーキテクチャ（非破壊オーバーライド方式）
+
+WordPress の theme.json にはカスケード（優先順位）がある。
+
+```
+default < blocks < theme < user  ← このプラグインはここに注入
+```
+
+- プラグインの設定は `wp_options`（キー: `next_theme_json_setup_overrides`）に JSON 文字列で保存する（autoload しない）。
+- `wp_theme_json_data_user` フィルターで、保存済み設定を `WP_Theme_JSON_Data::update_with()` を使って user レベルに注入する。
+- これにより**テーマの `theme.json` を書き換えずに**設定をオーバーライドできる。バックアップやファイル書き込みは不要。
+
+> 設計初期は「theme.json への書き戻し／子テーマ出力＋バックアップ」を想定していたが、安全性（テーマ更新時の競合・破壊リスク回避）のため非破壊方式に変更した。
+
+---
+
+## theme.json の主要構造（v3）
 
 ```json
 {
@@ -37,76 +56,97 @@ https://developer.wordpress.org/themes/global-settings-and-styles/
 }
 ```
 
+- **現行バージョンは v3**（`version: 3`、WordPress 6.6 以降）。本プラグインは保存時に `version` が無ければ 3 を補完する。
+- 保存できるトップレベルキーはアローリストで制限する: `version` / `$schema` / `settings` / `styles` / `customTemplates` / `templateParts` / `patterns`。
+
 ### `settings` — エディター制御 + プリセット定義
 
 | セクション | 内容 |
 |---|---|
-| `color` | パレット・グラデーション・デュオトーン |
-| `typography` | フォントサイズ・フォントファミリー・行間・装飾 |
-| `spacing` | margin / padding のプリセット・単位 |
+| `appearanceTools` | 外観ツール群（border / color / dimensions / position / spacing / typography / background）の一括有効化 |
+| `useRootPaddingAwareAlignments` | ルートパディングを考慮した全幅整列 |
+| `background` | 背景画像・背景サイズ（6.5 / 6.6 で追加） |
 | `border` | 幅・スタイル・色・角丸 |
-| `layout` | コンテンツ幅・ワイド幅 |
-| `shadow` | ボックスシャドウのプリセット |
-| `dimensions` | 最小高さ |
+| `color` | パレット・グラデーション・デュオトーン・要素別カラー（text / link / heading / button / caption） |
+| `typography` | フォントサイズ・行間・文字間隔・テキスト配置・縦書きなど |
+| `spacing` | margin / padding / blockGap・スペーシングプリセット |
+| `dimensions` | 最小高さ・アスペクト比 |
 | `position` | sticky 対応 |
+| `shadow` | ボックスシャドウのプリセット |
+| `lightbox` | 画像ブロックのライトボックス（`blocks.core/image.lightbox`） |
 | `custom` | CSS カスタムプロパティ（変数）の定義 |
 | `blocks` | ブロック単位の個別設定 |
-| `appearanceTools` | 外観ツール群の一括有効化 |
 
 ### `styles` — 実際のデザイン適用値
 
 - グローバル（`body`）への color / typography / spacing
-- 要素別スタイル（`button`, `link`, `h1`–`h6` など）
+- 要素別スタイル（`button`, `link`, `heading`, `h1`–`h6` など）
 - ブロック別スタイル（`core/paragraph`, `core/heading` など）
 
 ---
 
-## プラグインが持つべき機能
-
-### 必須機能
+## 実装済み機能
 
 | # | 機能 | 詳細 |
 |---|---|---|
-| 1 | **theme.json 読み込み** | 有効テーマの `theme.json` を読み取り |
-| 2 | **設定エディター UI** | `settings` / `styles` をセクション別に GUI 編集 |
-| 3 | **保存** | 編集結果を `theme.json` へ書き戻し（または wp-content 配下に child theme として出力） |
-| 4 | **プレビュー** | 変更後のサイト外観を確認できる |
-| 5 | **バリデーション** | JSON スキーマ（v3）に沿った入力チェック |
-| 6 | **バックアップ** | 上書き前に元ファイルをバックアップ |
+| 1 | **theme.json 読み込み** | 有効テーマ（子→親の順）の `theme.json` を読み取り、参照用に表示（読み取り専用） |
+| 2 | **トグルスイッチ UI** | theme.json v3 のブール設定をカテゴリ別に列挙し、ON/OFF で編集 |
+| 3 | **状態の可視化** | 各設定について「テーマ/WP のデフォルト値」と「プラグインによるオーバーライド中（カスタム）」をバッジで区別 |
+| 4 | **個別クリア** | オーバーライド中の項目だけを解除してデフォルトに戻す |
+| 5 | **Raw JSON 編集モード** | 上級者向けに JSON を直接編集 |
+| 6 | **保存** | `wp_options` にオーバーライドとして保存（`wp_theme_json_data_user` で適用） |
+| 7 | **バリデーション** | JSON パース・トップレベルキーのアローリスト・ペイロードサイズ上限（100KB） |
+| 8 | **リセット** | プラグインによる全オーバーライドを削除 |
 
-### 推奨機能
+### 未実装 / 対象外
 
-| # | 機能 | 詳細 |
+- **ライブプレビュー**（変更後のサイト外観プレビュー）は未実装。保存後に Site Editor / フロントで確認する運用。
+- `styles` の GUI 編集は Raw JSON モードで対応（専用 UI は未提供）。
+- スタイルバリエーション（`styles/` ディレクトリ）の管理は対象外。
+
+---
+
+## REST API
+
+ベースルート: `/wp-json/next-theme-json/v1/`。権限チェック: `current_user_can('edit_theme_options')`。nonce: `wp_rest`。
+
+| メソッド | エンドポイント | 説明 |
 |---|---|---|
-| 7 | **カラーパレット管理** | パレット一覧の追加・編集・削除 |
-| 8 | **タイポグラフィ管理** | フォントサイズプリセットの管理 |
-| 9 | **スタイルバリエーション対応** | `styles/` ディレクトリ内のバリエーションも管理 |
-| 10 | **Raw JSON 編集モード** | コードエディターで直接 JSON 編集 |
-| 11 | **リセット機能** | テーマ標準の `theme.json` へ戻す |
-| 12 | **エクスポート** | 編集済み `theme.json` をダウンロード |
+| `GET`  | `/theme-json` | テーマの theme.json を取得（参照用・読み取り専用） |
+| `GET`  | `/override` | 保存済みオーバーライド設定を取得 |
+| `POST` | `/override` | オーバーライド設定を保存（アローリスト・サイズ上限を検証） |
+| `POST` | `/override/reset` | オーバーライド設定を削除（リセット） |
 
 ---
 
 ## 技術要件
 
-- **WordPress バージョン**: 6.0+（theme.json v2）、6.5+ 推奨（v3）
-- **権限**: `manage_options` または `edit_theme_options`
-- **書き込み方式**: 親テーマを直接書き換えず、**子テーマ or wp-content/uploads 配下** に保存するのが安全
-- **REST API**: `WP_REST_Controller` を使い JS フロントエンドから読み書き
-- **フロントエンド**: React（`@wordpress/components`）または vanilla JS
+- **WordPress バージョン**: 6.6+（theme.json v3）
+- **PHP バージョン**: 8.0+
+- **権限**: `edit_theme_options`
+- **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_user` フィルターで適用（非破壊）
+- **REST API**: `register_rest_route` によるカスタムルート（`/next-theme-json/v1/`）
+- **フロントエンド**: vanilla JS（`assets/js/admin.js`）。ビルド工程なし
+- **アンインストール**: `uninstall.php` でオプションを削除
 
 ---
 
-## 想定する画面構成
+## 画面構成
 
 ```
-管理画面 > 外観 > Theme.json 設定
-├── 概要（現在の theme.json バージョン・テーマ名）
-├── カラー設定
-├── タイポグラフィ設定
-├── スペーシング設定
-├── レイアウト設定
-├── ブロック別設定
-├── Raw JSON エディター
-└── バックアップ / リセット
+管理画面 > 外観 > theme.json 設定
+├── ヘッダー（テーマ名・オーバーライド適用状態・保存/リセット）
+├── サイドバー（カテゴリナビゲーション）
+│   ├── 一般（appearanceTools / useRootPaddingAwareAlignments）
+│   ├── 背景（background）
+│   ├── ボーダー（border）
+│   ├── カラー（color）
+│   ├── タイポグラフィ（typography）
+│   ├── スペーシング（spacing）
+│   ├── ディメンション（dimensions）
+│   ├── ポジション（position）
+│   ├── シャドウ（shadow）
+│   └── ライトボックス（blocks.core/image.lightbox）
+├── 設定行（トグル＋デフォルト/カスタムのバッジ＋個別クリア）
+└── Raw JSON エディター（参照: テーマの theme.json / 編集: オーバーライド）
 ```
