@@ -8,7 +8,7 @@
 | **スラッグ** | next-theme-json-setup |
 | **テキストドメイン** | next-theme-json-setup |
 | **ディレクトリ名** | NExT-theme-json-setup |
-| **バージョン** | 0.2.0 |
+| **バージョン** | 0.3.0 |
 
 ---
 
@@ -65,15 +65,17 @@ default < blocks < theme < user  ← このプラグインはここに注入
 |---|---|
 | `appearanceTools` | 外観ツール群（border / color / dimensions / position / spacing / typography / background）の一括有効化 |
 | `useRootPaddingAwareAlignments` | ルートパディングを考慮した全幅整列 |
-| `background` | 背景画像・背景サイズ（6.5 / 6.6 で追加） |
+| `background` | 背景画像・背景サイズ・グラデーション（6.5〜7.1 で順次追加） |
 | `border` | 幅・スタイル・色・角丸 |
 | `color` | パレット・グラデーション・デュオトーン・要素別カラー（text / link / heading / button / caption） |
 | `typography` | フォントサイズ・行間・文字間隔・テキスト配置・縦書きなど |
 | `spacing` | margin / padding / blockGap・スペーシングプリセット |
-| `dimensions` | 最小高さ・アスペクト比 |
+| `dimensions` | 最小高さ・アスペクト比・最小幅（`minWidth`、7.1 で追加） |
 | `position` | sticky 対応 |
 | `shadow` | ボックスシャドウのプリセット |
 | `lightbox` | 画像ブロックのライトボックス（`blocks.core/image.lightbox`） |
+| `blockVisibility` | ブロックの表示/非表示編集 UI 制御（`allowEditing`、7.1 で追加） |
+| `viewport` | レスポンシブスタイル／ブロック表示条件のブレークポイント定義（`mobile` / `tablet`、7.1 で追加。オブジェクト型のため Raw JSON モードで編集） |
 | `custom` | CSS カスタムプロパティ（変数）の定義 |
 | `blocks` | ブロック単位の個別設定 |
 
@@ -82,6 +84,11 @@ default < blocks < theme < user  ← このプラグインはここに注入
 - グローバル（`body`）への color / typography / spacing
 - 要素別スタイル（`button`, `link`, `heading`, `h1`–`h6` など）
 - ブロック別スタイル（`core/paragraph`, `core/heading` など）
+- **WordPress 7.1 で追加**（いずれも文字列値のため Raw JSON モードで編集）
+  - `typography.textShadow` — テキストシャドウ（グローバル / ブロック単位 / 要素単位。カンマ区切りで複数指定可）
+  - `dimensions.minWidth` — 最小幅（グローバル / ブロック単位。`settings.dimensions.minWidth` を有効化したブロックが対象）
+  - `blocks.{blockName}.@tablet` / `@mobile` — `settings.viewport` のブレークポイントに基づくレスポンシブスタイル
+  - `blocks.core/navigation-link.-current` / `:hover` / `:focus` / `:focus-visible` / `:active` — ナビゲーションリンクの状態別スタイル拡張
 
 ---
 
@@ -102,6 +109,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 
 - **ライブプレビュー**（変更後のサイト外観プレビュー）は未実装。保存後に Site Editor / フロントで確認する運用。
 - `styles` の GUI 編集は Raw JSON モードで対応（専用 UI は未提供）。
+- `settings.viewport` のようなオブジェクト型・文字列型の `settings` 項目も、ブール値ではないためトグル UI 化せず Raw JSON モードで対応。
 - スタイルバリエーション（`styles/` ディレクトリ）の管理は対象外。
 
 ---
@@ -121,7 +129,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 
 ## 技術要件
 
-- **WordPress バージョン**: 6.6+（theme.json v3）
+- **WordPress バージョン**: 6.6+（theme.json v3）。WordPress 7.1 未満の環境では `background.gradient` / `dimensions.minWidth` / `blockVisibility.allowEditing` などの新設定を ON にしても WP 側が未対応のため効果はない（保存自体は可能）。
 - **PHP バージョン**: 8.0+
 - **権限**: `edit_theme_options`
 - **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_user` フィルターで適用（非破壊）
@@ -146,7 +154,8 @@ default < blocks < theme < user  ← このプラグインはここに注入
 │   ├── ディメンション（dimensions）
 │   ├── ポジション（position）
 │   ├── シャドウ（shadow）
-│   └── ライトボックス（blocks.core/image.lightbox）
+│   ├── ライトボックス（blocks.core/image.lightbox）
+│   └── ブロックの表示/非表示（blockVisibility）
 ├── 設定行（トグル＋デフォルト/カスタムのバッジ＋個別クリア）
 └── Raw JSON エディター（参照: テーマの theme.json / 編集: オーバーライド）
 ```
