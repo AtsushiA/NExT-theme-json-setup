@@ -3,7 +3,7 @@
  * Plugin Name:       NExT theme.json Setup
  * Plugin URI:        https://github.com/AtsushiA/NExT-theme-json-setup
  * Description:       有効化されているテーマの theme.json を管理画面から GUI で閲覧・編集・保存できるプラグイン。テーマファイルは書き換えず、オーバーライド設定として DB に保存して適用します。
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 6.6
  * Requires PHP:      8.0
  * Author:            NExT
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NEXT_THEME_JSON_SETUP_VERSION', '0.2.0' );
+define( 'NEXT_THEME_JSON_SETUP_VERSION', '0.3.0' );
 define( 'NEXT_THEME_JSON_SETUP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NEXT_THEME_JSON_SETUP_URL', plugin_dir_url( __FILE__ ) );
 

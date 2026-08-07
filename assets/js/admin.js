@@ -47,6 +47,12 @@
 					description: '背景画像のサイズ・繰り返し・位置（focal point）を設定できるようにします。WordPress 6.6 以降で利用可能。',
 					wpDefault: false,
 				},
+				{
+					key: [ 'settings', 'background', 'gradient' ],
+					label: 'グラデーション背景',
+					description: 'ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。',
+					wpDefault: false,
+				},
 			],
 		},
 		{
@@ -304,6 +310,12 @@
 					description: 'WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。',
 					wpDefault: true,
 				},
+				{
+					key: [ 'settings', 'dimensions', 'minWidth' ],
+					label: '最小幅（min-width）',
+					description: '対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。',
+					wpDefault: false,
+				},
 			],
 		},
 		{
@@ -347,6 +359,19 @@
 					key: [ 'settings', 'blocks', 'core/image', 'lightbox', 'allowEditing' ],
 					label: 'ライトボックス編集を許可',
 					description: 'ユーザーが画像ブロックごとにライトボックスの有効・無効を変更できるようにします。',
+					wpDefault: true,
+				},
+			],
+		},
+		{
+			id: 'blockVisibility',
+			label: 'ブロックの表示/非表示',
+			icon: '◐',
+			settings: [
+				{
+					key: [ 'settings', 'blockVisibility', 'allowEditing' ],
+					label: '表示/非表示設定の編集を許可',
+					description: 'エディター上でブロックごとの表示・非表示（デバイス別の切り替えなど）を編集できるようにします。false にすると編集 UI が非表示になりますが、既存の表示設定自体は変更されません。WordPress 7.1 以降で利用可能。',
 					wpDefault: true,
 				},
 			],
