@@ -63,10 +63,13 @@ class Next_Theme_Json_Admin_Page {
 		wp_enqueue_script(
 			'next-theme-json-setup-admin',
 			NEXT_THEME_JSON_SETUP_URL . 'assets/js/admin.js',
-			array( 'wp-element', 'wp-components' ),
+			array( 'wp-element', 'wp-components', 'wp-i18n' ),
 			NEXT_THEME_JSON_SETUP_VERSION,
 			true
 		);
+
+		// admin.js 内の wp.i18n.__() 呼び出しに languages/ の翻訳データを紐付ける.
+		wp_set_script_translations( 'next-theme-json-setup-admin', 'next-theme-json-setup', NEXT_THEME_JSON_SETUP_DIR . 'languages' );
 
 		wp_localize_script(
 			'next-theme-json-setup-admin',

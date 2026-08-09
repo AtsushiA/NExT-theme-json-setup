@@ -15,6 +15,7 @@ A WordPress plugin that lets you view, edit, and manage the active theme's `them
 - **Custom / theme-default visualization** — overridden items are marked with a badge and can be cleared individually at any time
 - **Raw JSON edit mode** — an editor for advanced users to edit JSON directly
 - **Theme reference panel** — a read-only view of the theme's original `theme.json`
+- **Internationalization** — follows WordPress's standard translation file format (.pot/.po/.mo, JS translation JSON) and is automatically translated based on the site's language setting (English included)
 
 ---
 
@@ -94,6 +95,14 @@ Clicking the **Reset** button in the header removes all changes made by the plug
 
 ---
 
+## Internationalization
+
+The admin screen is automatically translated based on the site's language setting (Settings > General > Site Language). English (`en_US`) is currently the only bundled translation. The source language (the fallback shown when no translation is available) is Japanese.
+
+See [SPEC.md](SPEC.md#多言語対応i18n) (Japanese) for the translation file layout and the steps to add a new language.
+
+---
+
 ## File structure
 
 ```
@@ -106,6 +115,7 @@ NExT-theme-json-setup/
 ├── assets/
 │   ├── js/admin.js                              # Admin page frontend
 │   └── css/admin.css                            # Admin page styles
+├── languages/                                    # Translation files (.pot/.po/.mo, JS translation JSON)
 ├── README.md
 ├── README.en.md
 ├── SPEC.md
