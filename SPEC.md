@@ -8,7 +8,7 @@
 | **スラッグ** | next-theme-json-setup |
 | **テキストドメイン** | next-theme-json-setup |
 | **ディレクトリ名** | NExT-theme-json-setup |
-| **バージョン** | 0.4.0 |
+| **バージョン** | 0.5.0 |
 
 ---
 
@@ -105,6 +105,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 | 7 | **バリデーション** | JSON パース・トップレベルキーのアローリスト・ペイロードサイズ上限（100KB） |
 | 8 | **リセット** | プラグインによる全オーバーライドを削除 |
 | 9 | **ビューポート幅設定** | `settings.viewport.mobile` / `tablet` を有効化トグル＋ WordPress コアの UnitControl（px / em / rem 切り替え）で編集 |
+| 10 | **多言語対応（i18n）** | WordPress 標準の翻訳ファイル（.pot/.po/.mo・JS 翻訳 JSON）に対応。管理画面はサイト言語に応じて自動的に翻訳される |
 
 ### 未実装 / 対象外
 
@@ -135,7 +136,8 @@ default < blocks < theme < user  ← このプラグインはここに注入
 - **権限**: `edit_theme_options`
 - **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_user` フィルターで適用（非破壊）
 - **REST API**: `register_rest_route` によるカスタムルート（`/next-theme-json/v1/`）
-- **フロントエンド**: vanilla JS（`assets/js/admin.js`）。ビルド工程なし。ビューポート幅入力のみ WordPress コアが提供する `wp-element` / `wp-components`（`UnitControl`）をスクリプト依存として読み込み、ビルド不要な `wp.element.createElement` 経由で描画
+- **フロントエンド**: vanilla JS（`assets/js/admin.js`）。ビルド工程なし。ビューポート幅入力のみ WordPress コアが提供する `wp-element` / `wp-components`（`UnitControl`）をスクリプト依存として読み込み、ビルド不要な `wp.element.createElement` 経由で描画。文字列の翻訳には `wp-i18n`（`wp.i18n.__` / `sprintf`）を使用
+- **多言語対応**: WordPress 標準の翻訳ファイル（`.pot`/`.po`/`.mo`・JS 翻訳 JSON）に準拠。詳細は「多言語対応（i18n）」を参照
 - **アンインストール**: `uninstall.php` でオプションを削除
 
 ---
@@ -161,3 +163,48 @@ default < blocks < theme < user  ← このプラグインはここに注入
 ├── 設定行（トグル＋デフォルト/カスタムのバッジ＋個別クリア）
 └── Raw JSON エディター（参照: テーマの theme.json / 編集: オーバーライド）
 ```
+
+---
+
+## 多言語対応（i18n）
+
+本プラグインのソース文字列（PHP・JS とも）は**日本語**。WordPress 標準の翻訳ファイル形式（.pot/.po/.mo、および JS 翻訳 JSON）に準拠し、サイトの言語設定（`WPLANG` / サイト言語）に応じて自動的に翻訳される。**同梱の翻訳は英語（`en_US`）のみ**。他言語は `languages/next-theme-json-setup.pot` を元に翻訳ファイルを追加することで対応できる。
+
+### 仕組み
+
+- **PHP 文字列**: 全て `__()` / `_e()` / `esc_html__()` 等でラップ（テキストドメイン: `next-theme-json-setup`）。プラグインヘッダーの `Text Domain` / `Domain Path`（`/languages`）により、WordPress 4.6+ の JIT（Just-In-Time）自動読み込みで `languages/next-theme-json-setup-{locale}.mo` を読み込む。**`load_plugin_textdomain()` の明示呼び出しは不要**（本プラグインの最低要件 WordPress 6.6 は 4.6 を大きく上回るため）。
+- **JS 文字列**（`assets/js/admin.js` のカテゴリ・設定ラベル/説明など）: `@wordpress/i18n`（`wp.i18n.__` / `wp.i18n.sprintf`）でラップ。`wp_enqueue_script()` に `wp-i18n` を依存として追加し、`wp_set_script_translations( 'next-theme-json-setup-admin', 'next-theme-json-setup', languages ディレクトリ )` を呼ぶことで、`languages/next-theme-json-setup-{locale}-next-theme-json-setup-admin.json` を自動読み込みする。ビルド工程（webpack 等）は不要——`wp.element.createElement` と同様、WordPress コアが提供するグローバルスクリプトを利用するのみ。
+- 翻訳ファイルが存在しないロケールでは、ソース文字列（日本語）がそのまま表示される（フォールバック）。
+
+### 翻訳ファイルの構成
+
+```
+languages/
+├── next-theme-json-setup.pot                                    # 翻訳テンプレート（msgid のみ）
+├── next-theme-json-setup-en_US.po                                # 英語翻訳（人間可読）
+├── next-theme-json-setup-en_US.mo                                # 英語翻訳（PHP gettext 用バイナリ）
+└── next-theme-json-setup-en_US-next-theme-json-setup-admin.json  # 英語翻訳（JS/wp.i18n 用。ファイル名は {domain}-{locale}-{スクリプトハンドル}.json）
+```
+
+### 新しい言語を追加する手順
+
+1. `.pot` を最新化（文字列を追加・変更した場合）:
+   ```bash
+   npx wp-env run cli --env-cwd=wp-content/plugins/NExT-theme-json-setup -- \
+     wp i18n make-pot . languages/next-theme-json-setup.pot --domain=next-theme-json-setup --slug=next-theme-json-setup
+   ```
+2. `languages/next-theme-json-setup.pot` をコピーして `next-theme-json-setup-{locale}.po`（例: `fr_FR`）を作成し、`msgstr` を翻訳する。
+3. `.mo` と JS 翻訳 JSON を生成する:
+   ```bash
+   npx wp-env run cli --env-cwd=wp-content/plugins/NExT-theme-json-setup -- wp i18n make-mo languages
+   npx wp-env run cli --env-cwd=wp-content/plugins/NExT-theme-json-setup -- wp i18n make-json languages --no-purge
+   ```
+4. **`wp i18n make-json` が生成するファイル名は本プラグインの構成では不正**（`wp_set_script_translations()` に明示的な `$path` を渡しているため、WordPress は `{domain}-{locale}-{スクリプトハンドル}.json` というファイル名を最初に探す。`make-json` が生成する md5 ハッシュ名のファイルはこのケースでは参照されない）。生成されたファイルを次の名前にリネームする:
+   ```bash
+   mv languages/next-theme-json-setup-{locale}-*.json languages/next-theme-json-setup-{locale}-next-theme-json-setup-admin.json
+   ```
+5. サイト言語を切り替えて（設定 > 一般 > サイトの言語、または `wp site switch-language {locale}`）動作確認する。
+
+### 開発・テスト環境の既定言語
+
+`wp-env` の開発/テスト環境は `lifecycleScripts.afterStart` で日本語（`ja`）に固定している（本プラグインのソース言語と揃え、既存の e2e テストが日本語表示を前提にできるようにするため）。英語表示の検証は `tests/e2e/admin-page.spec.ts` 内の専用テストが `wp site switch-language` で一時的に切り替えて確認する。

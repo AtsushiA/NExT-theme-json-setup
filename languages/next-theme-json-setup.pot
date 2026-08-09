@@ -1,0 +1,623 @@
+# Copyright (C) 2026 NExT
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: NExT theme.json Setup 0.4.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/next-theme-json-setup\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-09T14:02:40+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: next-theme-json-setup\n"
+
+#. Plugin Name of the plugin
+#: next-theme-json-setup.php
+msgid "NExT theme.json Setup"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: next-theme-json-setup.php
+msgid "https://github.com/AtsushiA/NExT-theme-json-setup"
+msgstr ""
+
+#. Description of the plugin
+#: next-theme-json-setup.php
+msgid "有効化されているテーマの theme.json を管理画面から GUI で閲覧・編集・保存できるプラグイン。テーマファイルは書き換えず、オーバーライド設定として DB に保存して適用します。"
+msgstr ""
+
+#. Author of the plugin
+#: next-theme-json-setup.php
+msgid "NExT"
+msgstr ""
+
+#. Author URI of the plugin
+#: next-theme-json-setup.php
+msgid "https://next-season.net"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:34
+#: includes/class-next-theme-json-admin-page.php:35
+#: includes/class-next-theme-json-admin-page.php:104
+msgid "theme.json 設定"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:81
+msgid "保存しました。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:82
+msgid "保存に失敗しました。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:83
+#: includes/class-next-theme-json-rest-api.php:233
+msgid "オーバーライド設定をリセットしました。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:84
+msgid "オーバーライド設定をリセットしますか？プラグインによる変更がすべて削除されます。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:85
+msgid "不正な JSON です。保存できません。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:108
+msgid "テーマ:"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:112
+msgid "オーバーライド適用中"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:119
+msgid "リセット"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:122
+msgid "保存"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:130
+msgid "設定"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:133
+msgid "Raw JSON"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:136
+msgid "テーマ参照"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:151
+msgid "オーバーライド設定を JSON で直接編集できます。トグルスイッチで変更した内容はここにも反映されます。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:157
+msgid "Raw JSON エディター"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:164
+msgid "テーマに内包されている theme.json の内容です（読み取り専用・編集不可）。"
+msgstr ""
+
+#: includes/class-next-theme-json-admin-page.php:172
+msgid "テーマの theme.json（参照）"
+msgstr ""
+
+#: includes/class-next-theme-json-rest-api.php:181
+msgid "JSON が大きすぎます（上限 100KB）。"
+msgstr ""
+
+#. translators: %s: JSON パースエラーメッセージ.
+#: includes/class-next-theme-json-rest-api.php:193
+#, php-format
+msgid "不正な JSON です: %s"
+msgstr ""
+
+#. translators: %s: 許可されていないキー名のカンマ区切りリスト.
+#: includes/class-next-theme-json-rest-api.php:208
+#, php-format
+msgid "許可されていないキーが含まれています: %s"
+msgstr ""
+
+#: includes/class-next-theme-json-rest-api.php:219
+msgid "オーバーライド設定を保存しました。"
+msgstr ""
+
+#: assets/js/admin.js:29
+msgid "一般"
+msgstr ""
+
+#: assets/js/admin.js:34
+msgid "外観ツール一括有効化"
+msgstr ""
+
+#: assets/js/admin.js:35
+msgid "ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。"
+msgstr ""
+
+#: assets/js/admin.js:40
+msgid "ルートパディング対応の整列"
+msgstr ""
+
+#: assets/js/admin.js:41
+msgid "コンテンツのパディングを考慮し、フルワイドブロックが正しく端まで伸びるよう調整します。"
+msgstr ""
+
+#: assets/js/admin.js:48
+msgid "背景"
+msgstr ""
+
+#: assets/js/admin.js:53
+msgid "背景画像"
+msgstr ""
+
+#: assets/js/admin.js:54
+msgid "ブロックに背景画像を設定できるようにします。WordPress 6.5 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:59
+msgid "背景画像のサイズ・位置"
+msgstr ""
+
+#: assets/js/admin.js:60
+msgid "背景画像のサイズ・繰り返し・位置（focal point）を設定できるようにします。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:65
+msgid "グラデーション背景"
+msgstr ""
+
+#: assets/js/admin.js:66
+msgid "ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:73
+msgid "ボーダー"
+msgstr ""
+
+#: assets/js/admin.js:78
+msgid "ボーダーカラー"
+msgstr ""
+
+#: assets/js/admin.js:79
+msgid "ブロックのボーダーカラーを Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:84
+msgid "角丸（border-radius）"
+msgstr ""
+
+#: assets/js/admin.js:85
+msgid "ブロックの角丸を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:90
+msgid "ボーダースタイル"
+msgstr ""
+
+#: assets/js/admin.js:91
+msgid "solid / dashed / dotted などのボーダースタイルを Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:96
+msgid "ボーダー幅"
+msgstr ""
+
+#: assets/js/admin.js:97
+msgid "ボーダーの幅を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:104
+msgid "カラー"
+msgstr ""
+
+#: assets/js/admin.js:109
+msgid "背景色"
+msgstr ""
+
+#: assets/js/admin.js:110
+msgid "ブロックの背景色を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:115
+msgid "カスタムカラー"
+msgstr ""
+
+#: assets/js/admin.js:116
+msgid "カラーピッカーで任意の色を指定できるようにします。false にするとテーマのプリセットのみに制限されます。"
+msgstr ""
+
+#: assets/js/admin.js:121
+msgid "カスタムデュオトーン"
+msgstr ""
+
+#: assets/js/admin.js:122
+msgid "ユーザーが独自のデュオトーンフィルターを作成できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:127
+msgid "カスタムグラデーション"
+msgstr ""
+
+#: assets/js/admin.js:128
+msgid "ユーザーが独自のグラデーションを作成できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:133
+msgid "デフォルトデュオトーン"
+msgstr ""
+
+#: assets/js/admin.js:134
+msgid "WordPress が提供するデフォルトのデュオトーンフィルタープリセットを表示します。"
+msgstr ""
+
+#: assets/js/admin.js:139
+msgid "デフォルトグラデーション"
+msgstr ""
+
+#: assets/js/admin.js:140
+msgid "WordPress が提供するデフォルトのグラデーションプリセットを表示します。"
+msgstr ""
+
+#: assets/js/admin.js:145
+msgid "デフォルトカラーパレット"
+msgstr ""
+
+#: assets/js/admin.js:146
+msgid "WordPress が提供するデフォルトのカラーパレットを表示します。"
+msgstr ""
+
+#: assets/js/admin.js:151
+msgid "リンクカラー"
+msgstr ""
+
+#: assets/js/admin.js:152
+msgid "リンクテキストの色を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:157
+msgid "テキストカラー"
+msgstr ""
+
+#: assets/js/admin.js:158
+msgid "ブロックのテキスト色を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:163
+msgid "見出しカラー"
+msgstr ""
+
+#: assets/js/admin.js:164
+msgid "見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:169
+msgid "ボタンカラー"
+msgstr ""
+
+#: assets/js/admin.js:170
+msgid "ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:175
+msgid "キャプションカラー"
+msgstr ""
+
+#: assets/js/admin.js:176
+msgid "キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:183
+msgid "タイポグラフィ"
+msgstr ""
+
+#: assets/js/admin.js:188
+msgid "カスタムフォントサイズ"
+msgstr ""
+
+#: assets/js/admin.js:189
+msgid "プリセット以外の任意のフォントサイズを入力できるようにします。false にするとプリセットのみに制限されます。"
+msgstr ""
+
+#: assets/js/admin.js:194
+msgid "ドロップキャップ"
+msgstr ""
+
+#: assets/js/admin.js:195
+msgid "段落の最初の文字を大きく装飾するドロップキャップを使用できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:200
+msgid "フルードタイポグラフィ"
+msgstr ""
+
+#: assets/js/admin.js:201
+msgid "ビューポートサイズに応じてフォントサイズが滑らかに変化するレスポンシブなタイポグラフィを有効にします。"
+msgstr ""
+
+#: assets/js/admin.js:206
+msgid "フォントスタイル"
+msgstr ""
+
+#: assets/js/admin.js:207
+msgid "イタリックなどのフォントスタイルを Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:212
+msgid "フォントウェイト"
+msgstr ""
+
+#: assets/js/admin.js:213
+msgid "フォントの太さ（Thin 〜 Black）を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:218
+msgid "文字間隔（letter-spacing）"
+msgstr ""
+
+#: assets/js/admin.js:219
+msgid "文字間隔を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:224
+msgid "行の高さ（line-height）"
+msgstr ""
+
+#: assets/js/admin.js:225
+msgid "行間を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:230
+msgid "テキストカラム数"
+msgstr ""
+
+#: assets/js/admin.js:231
+msgid "テキストを複数カラムで表示する設定を Site Editor で使用できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:236
+msgid "テキスト装飾"
+msgstr ""
+
+#: assets/js/admin.js:237
+msgid "下線・打ち消し線などのテキスト装飾を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:242
+msgid "テキスト変換（大文字/小文字）"
+msgstr ""
+
+#: assets/js/admin.js:243
+msgid "uppercase / lowercase / capitalize などのテキスト変換を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:248
+msgid "縦書き（writing-mode）"
+msgstr ""
+
+#: assets/js/admin.js:249
+msgid "縦書きなどのテキスト方向を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:254
+msgid "テキスト配置"
+msgstr ""
+
+#: assets/js/admin.js:255
+msgid "テキストの左揃え・中央揃え・右揃えを Site Editor で設定できるようにします。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:260
+msgid "デフォルトフォントサイズ"
+msgstr ""
+
+#: assets/js/admin.js:261
+msgid "WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:268
+msgid "スペーシング"
+msgstr ""
+
+#: assets/js/admin.js:273
+msgid "ブロック間隔（blockGap）"
+msgstr ""
+
+#: assets/js/admin.js:274
+msgid "ブロック間の余白を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:279
+msgid "カスタムスペーシングサイズ"
+msgstr ""
+
+#: assets/js/admin.js:280
+msgid "プリセット以外の任意の余白サイズを入力できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:285
+msgid "マージン（外側の余白）"
+msgstr ""
+
+#: assets/js/admin.js:286
+msgid "ブロックの外側の余白（margin）を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:291
+msgid "パディング（内側の余白）"
+msgstr ""
+
+#: assets/js/admin.js:292
+msgid "ブロックの内側の余白（padding）を Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:297
+msgid "デフォルトスペーシングサイズ"
+msgstr ""
+
+#: assets/js/admin.js:298
+msgid "WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:305
+msgid "ディメンション"
+msgstr ""
+
+#: assets/js/admin.js:310
+msgid "最小高さ（min-height）"
+msgstr ""
+
+#: assets/js/admin.js:311
+msgid "対応ブロックの最小高さを Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:316
+msgid "アスペクト比"
+msgstr ""
+
+#: assets/js/admin.js:317
+msgid "対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:322
+msgid "デフォルトアスペクト比プリセット"
+msgstr ""
+
+#: assets/js/admin.js:323
+msgid "WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:328
+msgid "最小幅（min-width）"
+msgstr ""
+
+#: assets/js/admin.js:329
+msgid "対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:336
+msgid "ポジション"
+msgstr ""
+
+#: assets/js/admin.js:341
+msgid "スティッキーポジション"
+msgstr ""
+
+#: assets/js/admin.js:342
+msgid "ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:349
+msgid "シャドウ"
+msgstr ""
+
+#: assets/js/admin.js:354
+msgid "デフォルトシャドウプリセット"
+msgstr ""
+
+#: assets/js/admin.js:355
+msgid "WordPress が提供する Natural / Deep / Sharp / Outlined / Crisp などのシャドウプリセットを表示します。"
+msgstr ""
+
+#: assets/js/admin.js:362
+msgid "ライトボックス"
+msgstr ""
+
+#: assets/js/admin.js:367
+msgid "ライトボックスを有効化"
+msgstr ""
+
+#: assets/js/admin.js:368
+msgid "画像ブロックをクリックしたときにライトボックス（拡大表示）を使用します。WordPress 6.4 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:373
+msgid "ライトボックス編集を許可"
+msgstr ""
+
+#: assets/js/admin.js:374
+msgid "ユーザーが画像ブロックごとにライトボックスの有効・無効を変更できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:381
+msgid "ブロックの表示/非表示"
+msgstr ""
+
+#: assets/js/admin.js:386
+msgid "表示/非表示設定の編集を許可"
+msgstr ""
+
+#: assets/js/admin.js:387
+msgid "エディター上でブロックごとの表示・非表示（デバイス別の切り替えなど）を編集できるようにします。false にすると編集 UI が非表示になりますが、既存の表示設定自体は変更されません。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:394
+msgid "ビューポート"
+msgstr ""
+
+#: assets/js/admin.js:401
+msgid "モバイル幅"
+msgstr ""
+
+#: assets/js/admin.js:402
+msgid "モバイル向けスタイル（@mobile）が適用される上限幅です。この幅以下の画面がモバイル扱いになります。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:407
+msgid "タブレット幅"
+msgstr ""
+
+#: assets/js/admin.js:408
+msgid "タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#. translators: %s: 現在の値.
+#: assets/js/admin.js:640
+#: assets/js/admin.js:739
+#, js-format
+msgid "テーマのデフォルト: %s"
+msgstr ""
+
+#: assets/js/admin.js:655
+#: assets/js/admin.js:755
+msgid "カスタム"
+msgstr ""
+
+#: assets/js/admin.js:662
+#: assets/js/admin.js:762
+msgid "ON"
+msgstr ""
+
+#: assets/js/admin.js:662
+#: assets/js/admin.js:762
+msgid "OFF"
+msgstr ""
+
+#: assets/js/admin.js:688
+#: assets/js/admin.js:811
+msgid "× クリア"
+msgstr ""
+
+#: assets/js/admin.js:689
+#: assets/js/admin.js:812
+msgid "このオーバーライドを削除"
+msgstr ""
+
+#. translators: %s: 現在の値.
+#: assets/js/admin.js:742
+#, js-format
+msgid "WP のデフォルト: %s"
+msgstr ""
+
+#. translators: %s: エラーメッセージ.
+#: assets/js/admin.js:1000
+#, js-format
+msgid "読み込みに失敗しました: %s"
+msgstr ""

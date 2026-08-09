@@ -5,6 +5,19 @@
 
 	const { apiBase, nonce, i18n } = nextThemeJsonSetup;
 
+	// WordPress 標準の JS 翻訳（wp.i18n / wp_set_script_translations）を使用する.
+	// wp-i18n は依存スクリプトとして必ず読み込まれるが、念のためフォールバックも用意する.
+	var __ = ( window.wp && wp.i18n && wp.i18n.__ )
+		? wp.i18n.__
+		: function ( text ) { return text; };
+	var sprintf = ( window.wp && wp.i18n && wp.i18n.sprintf )
+		? wp.i18n.sprintf
+		: function ( format ) {
+			var args = Array.prototype.slice.call( arguments, 1 );
+			var i    = 0;
+			return format.replace( /%s/g, function () { return args[ i++ ]; } );
+		};
+
 	// =========================================================================
 	// 設定スキーマ定義（theme.json v3 のブール設定をカテゴリ別に列挙）
 	// key: ネストしたパスをキーの配列で表現（'core/image' のようなスラッシュ含むキーに対応）
@@ -13,386 +26,386 @@
 	const CATEGORIES = [
 		{
 			id: 'general',
-			label: '一般',
+			label: __( '一般', 'next-theme-json-setup' ),
 			icon: '⚙',
 			settings: [
 				{
 					key: [ 'settings', 'appearanceTools' ],
-					label: '外観ツール一括有効化',
-					description: 'ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。',
+					label: __( '外観ツール一括有効化', 'next-theme-json-setup' ),
+					description: __( 'ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'useRootPaddingAwareAlignments' ],
-					label: 'ルートパディング対応の整列',
-					description: 'コンテンツのパディングを考慮し、フルワイドブロックが正しく端まで伸びるよう調整します。',
+					label: __( 'ルートパディング対応の整列', 'next-theme-json-setup' ),
+					description: __( 'コンテンツのパディングを考慮し、フルワイドブロックが正しく端まで伸びるよう調整します。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'background',
-			label: '背景',
+			label: __( '背景', 'next-theme-json-setup' ),
 			icon: '▤',
 			settings: [
 				{
 					key: [ 'settings', 'background', 'backgroundImage' ],
-					label: '背景画像',
-					description: 'ブロックに背景画像を設定できるようにします。WordPress 6.5 以降で利用可能。',
+					label: __( '背景画像', 'next-theme-json-setup' ),
+					description: __( 'ブロックに背景画像を設定できるようにします。WordPress 6.5 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'background', 'backgroundSize' ],
-					label: '背景画像のサイズ・位置',
-					description: '背景画像のサイズ・繰り返し・位置（focal point）を設定できるようにします。WordPress 6.6 以降で利用可能。',
+					label: __( '背景画像のサイズ・位置', 'next-theme-json-setup' ),
+					description: __( '背景画像のサイズ・繰り返し・位置（focal point）を設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'background', 'gradient' ],
-					label: 'グラデーション背景',
-					description: 'ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。',
+					label: __( 'グラデーション背景', 'next-theme-json-setup' ),
+					description: __( 'ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'border',
-			label: 'ボーダー',
+			label: __( 'ボーダー', 'next-theme-json-setup' ),
 			icon: '▢',
 			settings: [
 				{
 					key: [ 'settings', 'border', 'color' ],
-					label: 'ボーダーカラー',
-					description: 'ブロックのボーダーカラーを Site Editor で設定できるようにします。',
+					label: __( 'ボーダーカラー', 'next-theme-json-setup' ),
+					description: __( 'ブロックのボーダーカラーを Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'border', 'radius' ],
-					label: '角丸（border-radius）',
-					description: 'ブロックの角丸を Site Editor で設定できるようにします。',
+					label: __( '角丸（border-radius）', 'next-theme-json-setup' ),
+					description: __( 'ブロックの角丸を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'border', 'style' ],
-					label: 'ボーダースタイル',
-					description: 'solid / dashed / dotted などのボーダースタイルを Site Editor で設定できるようにします。',
+					label: __( 'ボーダースタイル', 'next-theme-json-setup' ),
+					description: __( 'solid / dashed / dotted などのボーダースタイルを Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'border', 'width' ],
-					label: 'ボーダー幅',
-					description: 'ボーダーの幅を Site Editor で設定できるようにします。',
+					label: __( 'ボーダー幅', 'next-theme-json-setup' ),
+					description: __( 'ボーダーの幅を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'color',
-			label: 'カラー',
+			label: __( 'カラー', 'next-theme-json-setup' ),
 			icon: '◉',
 			settings: [
 				{
 					key: [ 'settings', 'color', 'background' ],
-					label: '背景色',
-					description: 'ブロックの背景色を Site Editor で設定できるようにします。',
+					label: __( '背景色', 'next-theme-json-setup' ),
+					description: __( 'ブロックの背景色を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'custom' ],
-					label: 'カスタムカラー',
-					description: 'カラーピッカーで任意の色を指定できるようにします。false にするとテーマのプリセットのみに制限されます。',
+					label: __( 'カスタムカラー', 'next-theme-json-setup' ),
+					description: __( 'カラーピッカーで任意の色を指定できるようにします。false にするとテーマのプリセットのみに制限されます。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'customDuotone' ],
-					label: 'カスタムデュオトーン',
-					description: 'ユーザーが独自のデュオトーンフィルターを作成できるようにします。',
+					label: __( 'カスタムデュオトーン', 'next-theme-json-setup' ),
+					description: __( 'ユーザーが独自のデュオトーンフィルターを作成できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'customGradient' ],
-					label: 'カスタムグラデーション',
-					description: 'ユーザーが独自のグラデーションを作成できるようにします。',
+					label: __( 'カスタムグラデーション', 'next-theme-json-setup' ),
+					description: __( 'ユーザーが独自のグラデーションを作成できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'defaultDuotone' ],
-					label: 'デフォルトデュオトーン',
-					description: 'WordPress が提供するデフォルトのデュオトーンフィルタープリセットを表示します。',
+					label: __( 'デフォルトデュオトーン', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのデュオトーンフィルタープリセットを表示します。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'defaultGradients' ],
-					label: 'デフォルトグラデーション',
-					description: 'WordPress が提供するデフォルトのグラデーションプリセットを表示します。',
+					label: __( 'デフォルトグラデーション', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのグラデーションプリセットを表示します。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'defaultPalette' ],
-					label: 'デフォルトカラーパレット',
-					description: 'WordPress が提供するデフォルトのカラーパレットを表示します。',
+					label: __( 'デフォルトカラーパレット', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのカラーパレットを表示します。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'link' ],
-					label: 'リンクカラー',
-					description: 'リンクテキストの色を Site Editor で設定できるようにします。',
+					label: __( 'リンクカラー', 'next-theme-json-setup' ),
+					description: __( 'リンクテキストの色を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'text' ],
-					label: 'テキストカラー',
-					description: 'ブロックのテキスト色を Site Editor で設定できるようにします。',
+					label: __( 'テキストカラー', 'next-theme-json-setup' ),
+					description: __( 'ブロックのテキスト色を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'heading' ],
-					label: '見出しカラー',
-					description: '見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					label: __( '見出しカラー', 'next-theme-json-setup' ),
+					description: __( '見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'color', 'button' ],
-					label: 'ボタンカラー',
-					description: 'ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					label: __( 'ボタンカラー', 'next-theme-json-setup' ),
+					description: __( 'ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'color', 'caption' ],
-					label: 'キャプションカラー',
-					description: 'キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。',
+					label: __( 'キャプションカラー', 'next-theme-json-setup' ),
+					description: __( 'キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'typography',
-			label: 'タイポグラフィ',
+			label: __( 'タイポグラフィ', 'next-theme-json-setup' ),
 			icon: 'Aa',
 			settings: [
 				{
 					key: [ 'settings', 'typography', 'customFontSize' ],
-					label: 'カスタムフォントサイズ',
-					description: 'プリセット以外の任意のフォントサイズを入力できるようにします。false にするとプリセットのみに制限されます。',
+					label: __( 'カスタムフォントサイズ', 'next-theme-json-setup' ),
+					description: __( 'プリセット以外の任意のフォントサイズを入力できるようにします。false にするとプリセットのみに制限されます。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'dropCap' ],
-					label: 'ドロップキャップ',
-					description: '段落の最初の文字を大きく装飾するドロップキャップを使用できるようにします。',
+					label: __( 'ドロップキャップ', 'next-theme-json-setup' ),
+					description: __( '段落の最初の文字を大きく装飾するドロップキャップを使用できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'fluid' ],
-					label: 'フルードタイポグラフィ',
-					description: 'ビューポートサイズに応じてフォントサイズが滑らかに変化するレスポンシブなタイポグラフィを有効にします。',
+					label: __( 'フルードタイポグラフィ', 'next-theme-json-setup' ),
+					description: __( 'ビューポートサイズに応じてフォントサイズが滑らかに変化するレスポンシブなタイポグラフィを有効にします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'typography', 'fontStyle' ],
-					label: 'フォントスタイル',
-					description: 'イタリックなどのフォントスタイルを Site Editor で設定できるようにします。',
+					label: __( 'フォントスタイル', 'next-theme-json-setup' ),
+					description: __( 'イタリックなどのフォントスタイルを Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'fontWeight' ],
-					label: 'フォントウェイト',
-					description: 'フォントの太さ（Thin 〜 Black）を Site Editor で設定できるようにします。',
+					label: __( 'フォントウェイト', 'next-theme-json-setup' ),
+					description: __( 'フォントの太さ（Thin 〜 Black）を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'letterSpacing' ],
-					label: '文字間隔（letter-spacing）',
-					description: '文字間隔を Site Editor で設定できるようにします。',
+					label: __( '文字間隔（letter-spacing）', 'next-theme-json-setup' ),
+					description: __( '文字間隔を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'typography', 'lineHeight' ],
-					label: '行の高さ（line-height）',
-					description: '行間を Site Editor で設定できるようにします。',
+					label: __( '行の高さ（line-height）', 'next-theme-json-setup' ),
+					description: __( '行間を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'typography', 'textColumns' ],
-					label: 'テキストカラム数',
-					description: 'テキストを複数カラムで表示する設定を Site Editor で使用できるようにします。',
+					label: __( 'テキストカラム数', 'next-theme-json-setup' ),
+					description: __( 'テキストを複数カラムで表示する設定を Site Editor で使用できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'typography', 'textDecoration' ],
-					label: 'テキスト装飾',
-					description: '下線・打ち消し線などのテキスト装飾を Site Editor で設定できるようにします。',
+					label: __( 'テキスト装飾', 'next-theme-json-setup' ),
+					description: __( '下線・打ち消し線などのテキスト装飾を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'textTransform' ],
-					label: 'テキスト変換（大文字/小文字）',
-					description: 'uppercase / lowercase / capitalize などのテキスト変換を Site Editor で設定できるようにします。',
+					label: __( 'テキスト変換（大文字/小文字）', 'next-theme-json-setup' ),
+					description: __( 'uppercase / lowercase / capitalize などのテキスト変換を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'writingMode' ],
-					label: '縦書き（writing-mode）',
-					description: '縦書きなどのテキスト方向を Site Editor で設定できるようにします。',
+					label: __( '縦書き（writing-mode）', 'next-theme-json-setup' ),
+					description: __( '縦書きなどのテキスト方向を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'typography', 'textAlign' ],
-					label: 'テキスト配置',
-					description: 'テキストの左揃え・中央揃え・右揃えを Site Editor で設定できるようにします。WordPress 6.6 以降で利用可能。',
+					label: __( 'テキスト配置', 'next-theme-json-setup' ),
+					description: __( 'テキストの左揃え・中央揃え・右揃えを Site Editor で設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'defaultFontSizes' ],
-					label: 'デフォルトフォントサイズ',
-					description: 'WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。',
+					label: __( 'デフォルトフォントサイズ', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 			],
 		},
 		{
 			id: 'spacing',
-			label: 'スペーシング',
+			label: __( 'スペーシング', 'next-theme-json-setup' ),
 			icon: '⇔',
 			settings: [
 				{
 					key: [ 'settings', 'spacing', 'blockGap' ],
-					label: 'ブロック間隔（blockGap）',
-					description: 'ブロック間の余白を Site Editor で設定できるようにします。',
+					label: __( 'ブロック間隔（blockGap）', 'next-theme-json-setup' ),
+					description: __( 'ブロック間の余白を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'spacing', 'customSpacingSize' ],
-					label: 'カスタムスペーシングサイズ',
-					description: 'プリセット以外の任意の余白サイズを入力できるようにします。',
+					label: __( 'カスタムスペーシングサイズ', 'next-theme-json-setup' ),
+					description: __( 'プリセット以外の任意の余白サイズを入力できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'spacing', 'margin' ],
-					label: 'マージン（外側の余白）',
-					description: 'ブロックの外側の余白（margin）を Site Editor で設定できるようにします。',
+					label: __( 'マージン（外側の余白）', 'next-theme-json-setup' ),
+					description: __( 'ブロックの外側の余白（margin）を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'spacing', 'padding' ],
-					label: 'パディング（内側の余白）',
-					description: 'ブロックの内側の余白（padding）を Site Editor で設定できるようにします。',
+					label: __( 'パディング（内側の余白）', 'next-theme-json-setup' ),
+					description: __( 'ブロックの内側の余白（padding）を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'spacing', 'defaultSpacingSizes' ],
-					label: 'デフォルトスペーシングサイズ',
-					description: 'WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。',
+					label: __( 'デフォルトスペーシングサイズ', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 			],
 		},
 		{
 			id: 'dimensions',
-			label: 'ディメンション',
+			label: __( 'ディメンション', 'next-theme-json-setup' ),
 			icon: '↕',
 			settings: [
 				{
 					key: [ 'settings', 'dimensions', 'minHeight' ],
-					label: '最小高さ（min-height）',
-					description: '対応ブロックの最小高さを Site Editor で設定できるようにします。',
+					label: __( '最小高さ（min-height）', 'next-theme-json-setup' ),
+					description: __( '対応ブロックの最小高さを Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'dimensions', 'aspectRatio' ],
-					label: 'アスペクト比',
-					description: '対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。',
+					label: __( 'アスペクト比', 'next-theme-json-setup' ),
+					description: __( '対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'dimensions', 'defaultAspectRatios' ],
-					label: 'デフォルトアスペクト比プリセット',
-					description: 'WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。',
+					label: __( 'デフォルトアスペクト比プリセット', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'dimensions', 'minWidth' ],
-					label: '最小幅（min-width）',
-					description: '対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。',
+					label: __( '最小幅（min-width）', 'next-theme-json-setup' ),
+					description: __( '対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'position',
-			label: 'ポジション',
+			label: __( 'ポジション', 'next-theme-json-setup' ),
 			icon: '⊡',
 			settings: [
 				{
 					key: [ 'settings', 'position', 'sticky' ],
-					label: 'スティッキーポジション',
-					description: 'ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。',
+					label: __( 'スティッキーポジション', 'next-theme-json-setup' ),
+					description: __( 'ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
 		},
 		{
 			id: 'shadow',
-			label: 'シャドウ',
+			label: __( 'シャドウ', 'next-theme-json-setup' ),
 			icon: '◫',
 			settings: [
 				{
 					key: [ 'settings', 'shadow', 'defaultPresets' ],
-					label: 'デフォルトシャドウプリセット',
-					description: 'WordPress が提供する Natural / Deep / Sharp / Outlined / Crisp などのシャドウプリセットを表示します。',
+					label: __( 'デフォルトシャドウプリセット', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供する Natural / Deep / Sharp / Outlined / Crisp などのシャドウプリセットを表示します。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 			],
 		},
 		{
 			id: 'lightbox',
-			label: 'ライトボックス',
+			label: __( 'ライトボックス', 'next-theme-json-setup' ),
 			icon: '⊞',
 			settings: [
 				{
 					key: [ 'settings', 'blocks', 'core/image', 'lightbox', 'enabled' ],
-					label: 'ライトボックスを有効化',
-					description: '画像ブロックをクリックしたときにライトボックス（拡大表示）を使用します。WordPress 6.4 以降で利用可能。',
+					label: __( 'ライトボックスを有効化', 'next-theme-json-setup' ),
+					description: __( '画像ブロックをクリックしたときにライトボックス（拡大表示）を使用します。WordPress 6.4 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'blocks', 'core/image', 'lightbox', 'allowEditing' ],
-					label: 'ライトボックス編集を許可',
-					description: 'ユーザーが画像ブロックごとにライトボックスの有効・無効を変更できるようにします。',
+					label: __( 'ライトボックス編集を許可', 'next-theme-json-setup' ),
+					description: __( 'ユーザーが画像ブロックごとにライトボックスの有効・無効を変更できるようにします。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 			],
 		},
 		{
 			id: 'blockVisibility',
-			label: 'ブロックの表示/非表示',
+			label: __( 'ブロックの表示/非表示', 'next-theme-json-setup' ),
 			icon: '◐',
 			settings: [
 				{
 					key: [ 'settings', 'blockVisibility', 'allowEditing' ],
-					label: '表示/非表示設定の編集を許可',
-					description: 'エディター上でブロックごとの表示・非表示（デバイス別の切り替えなど）を編集できるようにします。false にすると編集 UI が非表示になりますが、既存の表示設定自体は変更されません。WordPress 7.1 以降で利用可能。',
+					label: __( '表示/非表示設定の編集を許可', 'next-theme-json-setup' ),
+					description: __( 'エディター上でブロックごとの表示・非表示（デバイス別の切り替えなど）を編集できるようにします。false にすると編集 UI が非表示になりますが、既存の表示設定自体は変更されません。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
 				},
 			],
 		},
 		{
 			id: 'viewport',
-			label: 'ビューポート',
+			label: __( 'ビューポート', 'next-theme-json-setup' ),
 			icon: '⛶',
 			// ブール値ではなく単位付き文字列（例: "480px"）を扱うため、専用の行 UI（buildViewportSettingRow）で描画する。
 			type: 'viewport',
 			settings: [
 				{
 					key: [ 'settings', 'viewport', 'mobile' ],
-					label: 'モバイル幅',
-					description: 'モバイル向けスタイル（@mobile）が適用される上限幅です。この幅以下の画面がモバイル扱いになります。WordPress 7.1 以降で利用可能。',
+					label: __( 'モバイル幅', 'next-theme-json-setup' ),
+					description: __( 'モバイル向けスタイル（@mobile）が適用される上限幅です。この幅以下の画面がモバイル扱いになります。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: '480px',
 				},
 				{
 					key: [ 'settings', 'viewport', 'tablet' ],
-					label: 'タブレット幅',
-					description: 'タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。',
+					label: __( 'タブレット幅', 'next-theme-json-setup' ),
+					description: __( 'タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: '782px',
 				},
 			],
@@ -622,7 +635,11 @@
 		if ( themeVal !== undefined ) {
 			var themeValEl  = document.createElement( 'div' );
 			themeValEl.className   = 'ntjs-setting-theme-val';
-			themeValEl.textContent = 'テーマのデフォルト: ' + ( themeVal ? 'true' : 'false' );
+			themeValEl.textContent = sprintf(
+				/* translators: %s: 現在の値. */
+				__( 'テーマのデフォルト: %s', 'next-theme-json-setup' ),
+				themeVal ? 'true' : 'false'
+			);
 			info.appendChild( themeValEl );
 		}
 
@@ -635,14 +652,14 @@
 		if ( isOverridden ) {
 			var badge  = document.createElement( 'span' );
 			badge.className   = 'ntjs-badge ntjs-badge--custom';
-			badge.textContent = 'カスタム';
+			badge.textContent = __( 'カスタム', 'next-theme-json-setup' );
 			control.appendChild( badge );
 		}
 
 		// トグルスイッチ
 		var label      = document.createElement( 'label' );
 		label.className   = 'ntjs-switch';
-		label.title = effectiveVal ? 'ON' : 'OFF';
+		label.title = effectiveVal ? __( 'ON', 'next-theme-json-setup' ) : __( 'OFF', 'next-theme-json-setup' );
 
 		var checkbox = document.createElement( 'input' );
 		checkbox.type    = 'checkbox';
@@ -668,8 +685,8 @@
 		if ( isOverridden ) {
 			var clearBtn  = document.createElement( 'button' );
 			clearBtn.className   = 'ntjs-clear-btn';
-			clearBtn.textContent = '× クリア';
-			clearBtn.title       = 'このオーバーライドを削除';
+			clearBtn.textContent = __( '× クリア', 'next-theme-json-setup' );
+			clearBtn.title       = __( 'このオーバーライドを削除', 'next-theme-json-setup' );
 			clearBtn.addEventListener( 'click', function () {
 				deleteNestedValue( overrideData, setting.key );
 				syncRawEditor();
@@ -717,9 +734,13 @@
 
 		var defaultValEl  = document.createElement( 'div' );
 		defaultValEl.className   = 'ntjs-setting-theme-val';
-		defaultValEl.textContent = isValidViewportValue( themeVal )
-			? ( 'テーマのデフォルト: ' + themeVal )
-			: ( 'WP のデフォルト: ' + setting.wpDefault );
+		if ( isValidViewportValue( themeVal ) ) {
+			/* translators: %s: 現在の値. */
+			defaultValEl.textContent = sprintf( __( 'テーマのデフォルト: %s', 'next-theme-json-setup' ), themeVal );
+		} else {
+			/* translators: %s: 現在の値. */
+			defaultValEl.textContent = sprintf( __( 'WP のデフォルト: %s', 'next-theme-json-setup' ), setting.wpDefault );
+		}
 		info.appendChild( defaultValEl );
 
 		row.appendChild( info );
@@ -731,14 +752,14 @@
 		if ( isOverridden ) {
 			var badge  = document.createElement( 'span' );
 			badge.className   = 'ntjs-badge ntjs-badge--custom';
-			badge.textContent = 'カスタム';
+			badge.textContent = __( 'カスタム', 'next-theme-json-setup' );
 			control.appendChild( badge );
 		}
 
 		// 有効/無効トグル。
 		var label      = document.createElement( 'label' );
 		label.className = 'ntjs-switch';
-		label.title      = isOverridden ? 'ON' : 'OFF';
+		label.title      = isOverridden ? __( 'ON', 'next-theme-json-setup' ) : __( 'OFF', 'next-theme-json-setup' );
 
 		var checkbox = document.createElement( 'input' );
 		checkbox.type    = 'checkbox';
@@ -787,8 +808,8 @@
 		if ( isOverridden ) {
 			var clearBtn  = document.createElement( 'button' );
 			clearBtn.className   = 'ntjs-clear-btn';
-			clearBtn.textContent = '× クリア';
-			clearBtn.title       = 'このオーバーライドを削除';
+			clearBtn.textContent = __( '× クリア', 'next-theme-json-setup' );
+			clearBtn.title       = __( 'このオーバーライドを削除', 'next-theme-json-setup' );
 			clearBtn.addEventListener( 'click', function () {
 				deleteNestedValue( overrideData, setting.key );
 				syncRawEditor();
@@ -974,7 +995,11 @@
 
 			btnSave.disabled = false;
 		} ).catch( function ( err ) {
-			showNotice( '読み込みに失敗しました: ' + err.message, 'error' );
+			showNotice(
+				/* translators: %s: エラーメッセージ. */
+				sprintf( __( '読み込みに失敗しました: %s', 'next-theme-json-setup' ), err.message ),
+				'error'
+			);
 		} );
 	}
 

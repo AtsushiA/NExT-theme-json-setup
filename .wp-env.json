@@ -21,6 +21,6 @@
         }
     },
     "lifecycleScripts": {
-        "afterStart": "npx wp-env run tests-cli wp plugin activate NExT-theme-json-setup"
+        "afterStart": "npx wp-env run tests-cli wp plugin activate NExT-theme-json-setup && npx wp-env run tests-cli wp language core install ja && npx wp-env run tests-cli wp site switch-language ja"
     }
 }

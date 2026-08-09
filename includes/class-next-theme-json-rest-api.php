@@ -178,7 +178,7 @@ class Next_Theme_Json_Rest_Api {
 		// ペイロードサイズ上限チェック（100KB）。
 		if ( strlen( $content ) > self::MAX_PAYLOAD_BYTES ) {
 			return new WP_REST_Response(
-				array( 'error' => 'JSON が大きすぎます（上限 100KB）。' ),
+				array( 'error' => __( 'JSON が大きすぎます（上限 100KB）。', 'next-theme-json-setup' ) ),
 				400
 			);
 		}
@@ -187,7 +187,13 @@ class Next_Theme_Json_Rest_Api {
 
 		if ( json_last_error() !== JSON_ERROR_NONE ) {
 			return new WP_REST_Response(
-				array( 'error' => '不正な JSON です: ' . json_last_error_msg() ),
+				array(
+					'error' => sprintf(
+						/* translators: %s: JSON パースエラーメッセージ. */
+						__( '不正な JSON です: %s', 'next-theme-json-setup' ),
+						json_last_error_msg()
+					),
+				),
 				400
 			);
 		}
@@ -196,7 +202,13 @@ class Next_Theme_Json_Rest_Api {
 		$unknown_keys = array_diff( array_keys( $decoded ), self::ALLOWED_TOP_KEYS );
 		if ( ! empty( $unknown_keys ) ) {
 			return new WP_REST_Response(
-				array( 'error' => '許可されていないキーが含まれています: ' . implode( ', ', $unknown_keys ) ),
+				array(
+					'error' => sprintf(
+						/* translators: %s: 許可されていないキー名のカンマ区切りリスト. */
+						__( '許可されていないキーが含まれています: %s', 'next-theme-json-setup' ),
+						implode( ', ', $unknown_keys )
+					),
+				),
 				400
 			);
 		}
@@ -204,7 +216,7 @@ class Next_Theme_Json_Rest_Api {
 		Next_Theme_Json_Override::save( $decoded );
 
 		return new WP_REST_Response(
-			array( 'message' => 'オーバーライド設定を保存しました。' ),
+			array( 'message' => __( 'オーバーライド設定を保存しました。', 'next-theme-json-setup' ) ),
 			200
 		);
 	}
@@ -218,7 +230,7 @@ class Next_Theme_Json_Rest_Api {
 		Next_Theme_Json_Override::clear();
 
 		return new WP_REST_Response(
-			array( 'message' => 'オーバーライド設定をリセットしました。' ),
+			array( 'message' => __( 'オーバーライド設定をリセットしました。', 'next-theme-json-setup' ) ),
 			200
 		);
 	}
