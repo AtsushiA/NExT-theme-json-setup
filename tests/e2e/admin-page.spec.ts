@@ -31,4 +31,26 @@ test.describe( 'NExT theme.json Setup admin page', () => {
 		const sidebar = page.locator( '#ntjs-sidebar' );
 		await expect( sidebar.locator( '.ntjs-nav-item', { hasText: '背景' } ) ).toBeVisible();
 	} );
+
+	test( '「ビューポート」カテゴリで幅入力欄（UnitControl）を有効化できる', async ( { admin, page } ) => {
+		await admin.visitAdminPage(
+			'themes.php',
+			'page=next-theme-json-setup'
+		);
+
+		const sidebar = page.locator( '#ntjs-sidebar' );
+		await sidebar.locator( '.ntjs-nav-item', { hasText: 'ビューポート' } ).click();
+
+		const content = page.locator( '#ntjs-content' );
+		const mobileRow = content.locator( '.ntjs-setting-row' ).filter( {
+			has: page.locator( '.ntjs-setting-label', { hasText: 'モバイル幅' } ),
+		} );
+		await expect( mobileRow ).toBeVisible();
+
+		// トグルを有効化すると UnitControl（コアコンポーネント。数値入力＋単位セレクト）が表示される.
+		await mobileRow.locator( '.ntjs-switch' ).click();
+		const unitControlHost = mobileRow.locator( '.ntjs-unit-control-host' );
+		await expect( unitControlHost.locator( 'input' ) ).toBeVisible();
+		await expect( unitControlHost.locator( 'select' ) ).toBeVisible();
+	} );
 } );

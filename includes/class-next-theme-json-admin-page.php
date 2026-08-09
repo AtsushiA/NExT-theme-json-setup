@@ -50,17 +50,20 @@ class Next_Theme_Json_Admin_Page {
 			return;
 		}
 
+		// ビューポート幅の単位選択に WordPress コアの UnitControl コンポーネントを使用する。
+		wp_enqueue_style( 'wp-components' );
+
 		wp_enqueue_style(
 			'next-theme-json-setup-admin',
 			NEXT_THEME_JSON_SETUP_URL . 'assets/css/admin.css',
-			array(),
+			array( 'wp-components' ),
 			NEXT_THEME_JSON_SETUP_VERSION
 		);
 
 		wp_enqueue_script(
 			'next-theme-json-setup-admin',
 			NEXT_THEME_JSON_SETUP_URL . 'assets/js/admin.js',
-			array(),
+			array( 'wp-element', 'wp-components' ),
 			NEXT_THEME_JSON_SETUP_VERSION,
 			true
 		);

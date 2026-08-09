@@ -376,6 +376,36 @@
 				},
 			],
 		},
+		{
+			id: 'viewport',
+			label: 'ビューポート',
+			icon: '⛶',
+			// ブール値ではなく単位付き文字列（例: "480px"）を扱うため、専用の行 UI（buildViewportSettingRow）で描画する。
+			type: 'viewport',
+			settings: [
+				{
+					key: [ 'settings', 'viewport', 'mobile' ],
+					label: 'モバイル幅',
+					description: 'モバイル向けスタイル（@mobile）が適用される上限幅です。この幅以下の画面がモバイル扱いになります。WordPress 7.1 以降で利用可能。',
+					wpDefault: '480px',
+				},
+				{
+					key: [ 'settings', 'viewport', 'tablet' ],
+					label: 'タブレット幅',
+					description: 'タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。',
+					wpDefault: '782px',
+				},
+			],
+		},
+	];
+
+	// =========================================================================
+	// ビューポート幅入力で選択できる単位（バックエンドの検証パターンと一致させる）。
+	// =========================================================================
+	var VIEWPORT_UNITS = [
+		{ value: 'px', label: 'px', default: 0 },
+		{ value: 'em', label: 'em', default: 0 },
+		{ value: 'rem', label: 'rem', default: 0 },
 	];
 
 	// =========================================================================
@@ -554,7 +584,10 @@
 		list.className = 'ntjs-setting-list';
 
 		cat.settings.forEach( function ( setting ) {
-			list.appendChild( buildSettingRow( setting ) );
+			var row = ( cat.type === 'viewport' )
+				? buildViewportSettingRow( setting )
+				: buildSettingRow( setting );
+			list.appendChild( row );
 		} );
 
 		content.appendChild( list );
@@ -649,6 +682,179 @@
 
 		row.appendChild( control );
 		return row;
+	}
+
+	// =========================================================================
+	// ビューポート設定行（settings.viewport.mobile / tablet）
+	// ブール値ではなく単位付き文字列（例: "480px"）を扱うため、buildSettingRow とは別に描画する。
+	// =========================================================================
+
+	function isValidViewportValue( value ) {
+		return typeof value === 'string' && /^(?:\d+|\d*\.\d+)(?:px|em|rem)$/.test( value.trim() );
+	}
+
+	function buildViewportSettingRow( setting ) {
+		var overrideVal  = getNestedValue( overrideData, setting.key );
+		var themeVal     = getNestedValue( themeData, setting.key );
+		var isOverridden = overrideVal !== undefined;
+
+		var row = document.createElement( 'div' );
+		row.className = 'ntjs-setting-row' + ( isOverridden ? ' is-overridden' : '' );
+
+		// 左側：ラベル + 説明
+		var info = document.createElement( 'div' );
+		info.className = 'ntjs-setting-info';
+
+		var labelEl  = document.createElement( 'div' );
+		labelEl.className   = 'ntjs-setting-label';
+		labelEl.textContent = setting.label;
+		info.appendChild( labelEl );
+
+		var descEl  = document.createElement( 'div' );
+		descEl.className   = 'ntjs-setting-desc';
+		descEl.textContent = setting.description;
+		info.appendChild( descEl );
+
+		var defaultValEl  = document.createElement( 'div' );
+		defaultValEl.className   = 'ntjs-setting-theme-val';
+		defaultValEl.textContent = isValidViewportValue( themeVal )
+			? ( 'テーマのデフォルト: ' + themeVal )
+			: ( 'WP のデフォルト: ' + setting.wpDefault );
+		info.appendChild( defaultValEl );
+
+		row.appendChild( info );
+
+		// 右側：バッジ + 有効化トグル + 単位付き数値入力（UnitControl） + クリアボタン
+		var control = document.createElement( 'div' );
+		control.className = 'ntjs-setting-control ntjs-setting-control--viewport';
+
+		if ( isOverridden ) {
+			var badge  = document.createElement( 'span' );
+			badge.className   = 'ntjs-badge ntjs-badge--custom';
+			badge.textContent = 'カスタム';
+			control.appendChild( badge );
+		}
+
+		// 有効/無効トグル。
+		var label      = document.createElement( 'label' );
+		label.className = 'ntjs-switch';
+		label.title      = isOverridden ? 'ON' : 'OFF';
+
+		var checkbox = document.createElement( 'input' );
+		checkbox.type    = 'checkbox';
+		checkbox.checked = isOverridden;
+
+		var track = document.createElement( 'span' );
+		track.className = 'ntjs-switch-track';
+
+		label.appendChild( checkbox );
+		label.appendChild( track );
+
+		checkbox.addEventListener( 'change', function () {
+			if ( checkbox.checked ) {
+				var initialValue = isValidViewportValue( themeVal ) ? themeVal : setting.wpDefault;
+				setNestedValue( overrideData, setting.key, initialValue );
+			} else {
+				deleteNestedValue( overrideData, setting.key );
+			}
+			syncRawEditor();
+			updateOverrideBadge();
+			renderSidebar();
+			renderContent();
+		} );
+
+		control.appendChild( label );
+
+		// 単位付き数値入力（有効時のみ表示）。
+		if ( isOverridden ) {
+			var unitControlHost = document.createElement( 'div' );
+			unitControlHost.className = 'ntjs-unit-control-host';
+			control.appendChild( unitControlHost );
+
+			mountViewportUnitControl(
+				unitControlHost,
+				isValidViewportValue( overrideVal ) ? overrideVal : setting.wpDefault,
+				setting.label,
+				function ( newValue ) {
+					setNestedValue( overrideData, setting.key, newValue );
+					syncRawEditor();
+					updateOverrideBadge();
+				}
+			);
+		}
+
+		// クリアボタン（オーバーライド中のみ表示）
+		if ( isOverridden ) {
+			var clearBtn  = document.createElement( 'button' );
+			clearBtn.className   = 'ntjs-clear-btn';
+			clearBtn.textContent = '× クリア';
+			clearBtn.title       = 'このオーバーライドを削除';
+			clearBtn.addEventListener( 'click', function () {
+				deleteNestedValue( overrideData, setting.key );
+				syncRawEditor();
+				updateOverrideBadge();
+				renderSidebar();
+				renderContent();
+			} );
+			control.appendChild( clearBtn );
+		}
+
+		row.appendChild( control );
+		return row;
+	}
+
+	/**
+	 * 幅入力欄を WordPress コアの UnitControl（wp.components）でマウントする。
+	 * コアコンポーネントが利用できない環境（読み込み失敗など）ではテキスト入力にフォールバックする。
+	 */
+	function mountViewportUnitControl( container, initialValue, label, onChange ) {
+		var UnitControl = window.wp && window.wp.components
+			? ( wp.components.UnitControl || wp.components.__experimentalUnitControl )
+			: null;
+
+		if ( ! UnitControl || ! window.wp.element ) {
+			var fallback = document.createElement( 'input' );
+			fallback.type      = 'text';
+			fallback.className = 'ntjs-unit-fallback-input';
+			fallback.value     = initialValue;
+			fallback.addEventListener( 'change', function () {
+				onChange( fallback.value );
+			} );
+			container.appendChild( fallback );
+			return;
+		}
+
+		var el           = wp.element.createElement;
+		var currentValue = initialValue;
+
+		// UnitControl は制御コンポーネントのため、onChange のたびに value を持ち回して
+		// 同じルートに再描画する（DOM ノードは React が差分更新するのでフォーカスは失われない）。
+		function renderControl() {
+			var element = el( UnitControl, {
+				value: currentValue,
+				units: VIEWPORT_UNITS,
+				min: 0,
+				size: 'compact',
+				label: label,
+				hideLabelFromVision: true,
+				onChange: function ( newValue ) {
+					currentValue = newValue || '';
+					onChange( currentValue );
+					renderControl();
+				},
+			} );
+
+			if ( wp.element.createRoot ) {
+				if ( ! container._ntjsRoot ) {
+					container._ntjsRoot = wp.element.createRoot( container );
+				}
+				container._ntjsRoot.render( element );
+			} else {
+				wp.element.render( element, container );
+			}
+		}
+
+		renderControl();
 	}
 
 	// =========================================================================
