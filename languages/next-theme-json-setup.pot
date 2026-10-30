@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-30T11:39:58+00:00\n"
+"POT-Creation-Date: 2026-10-30T13:11:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: next-theme-json-setup\n"
@@ -139,7 +139,7 @@ msgid "外観ツール一括有効化"
 msgstr ""
 
 #: assets/js/admin.js:35
-msgid "ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。"
+msgid "ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。明示的に値を指定していない項目だけが有効になります（このプラグインで ON にした場合は、テーマ側で OFF にしている項目も有効になります）。"
 msgstr ""
 
 #: assets/js/admin.js:40
@@ -475,7 +475,7 @@ msgid "ブロック間隔（blockGap）"
 msgstr ""
 
 #: assets/js/admin.js:305
-msgid "ブロック間の余白を Site Editor で設定できるようにします。"
+msgid "ブロック間の余白を Site Editor で設定できるようにします。ON で true（間隔の CSS を出力し操作欄も表示）、OFF で false（間隔の CSS は出力するが操作欄は非表示）を保存します。未設定（null）の場合はテーマが間隔に対応していない扱いになり、ブロックごとの既定の間隔が使われます（未設定に戻すには「クリア」を使用）。"
 msgstr ""
 
 #: assets/js/admin.js:310
@@ -646,51 +646,59 @@ msgstr ""
 msgid "タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。"
 msgstr ""
 
+#: assets/js/admin.js:746
+msgid "外観ツール（appearanceTools）により有効"
+msgstr ""
+
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:694
-#: assets/js/admin.js:808
-#: assets/js/admin.js:906
+#: assets/js/admin.js:749
+#: assets/js/admin.js:868
+#: assets/js/admin.js:966
 #, js-format
 msgid "テーマのデフォルト: %s"
 msgstr ""
 
-#: assets/js/admin.js:709
-#: assets/js/admin.js:824
-#: assets/js/admin.js:922
+#: assets/js/admin.js:751
+msgid "WP のデフォルト: 未設定（テーマが対応していない扱い）"
+msgstr ""
+
+#: assets/js/admin.js:769
+#: assets/js/admin.js:884
+#: assets/js/admin.js:982
 msgid "カスタム"
 msgstr ""
 
-#: assets/js/admin.js:716
-#: assets/js/admin.js:929
+#: assets/js/admin.js:776
+#: assets/js/admin.js:989
 msgid "ON"
 msgstr ""
 
-#: assets/js/admin.js:716
-#: assets/js/admin.js:929
+#: assets/js/admin.js:776
+#: assets/js/admin.js:989
 msgid "OFF"
 msgstr ""
 
-#: assets/js/admin.js:742
-#: assets/js/admin.js:855
-#: assets/js/admin.js:978
+#: assets/js/admin.js:802
+#: assets/js/admin.js:915
+#: assets/js/admin.js:1038
 msgid "× クリア"
 msgstr ""
 
-#: assets/js/admin.js:743
-#: assets/js/admin.js:856
-#: assets/js/admin.js:979
+#: assets/js/admin.js:803
+#: assets/js/admin.js:916
+#: assets/js/admin.js:1039
 msgid "このオーバーライドを削除"
 msgstr ""
 
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:811
-#: assets/js/admin.js:909
+#: assets/js/admin.js:871
+#: assets/js/admin.js:969
 #, js-format
 msgid "WP のデフォルト: %s"
 msgstr ""
 
 #. translators: %s: エラーメッセージ.
-#: assets/js/admin.js:1167
+#: assets/js/admin.js:1227
 #, js-format
 msgid "読み込みに失敗しました: %s"
 msgstr ""

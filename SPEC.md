@@ -94,7 +94,27 @@ default < blocks < theme < user  ← このプラグインはここに注入
   - `elements.label` — フォームの `label` 要素（`button` / `textInput` / `select` に加え、Global Styles でフォーム要素を一括スタイリング可能に）
   - `elements.textInput` の状態 — `:required` / `:user-valid` / `:user-invalid` / `:focus` / `:focus-visible` / `::placeholder`
   - `elements.select` の状態 — `:hover` / `:focus` / `:focus-visible` / `:active`
-  - `settings.typography.textShadowPresets` — テキストシャドウのプリセット定義（`--wp--preset--text-shadow--{slug}` を出力）
+  - `settings.typography.textShadowPresets` — テキストシャドウのプリセット定義。プリセットごとに CSS 変数 `--wp--preset--text-shadow--{slug}` と CSS クラス `.has-{slug}-text-shadow` が生成される。WP 標準のプリセットは「Light」「Strong」の 2 件（`settings.typography.defaultTextShadowPresets: false` で非表示）
+    ```json
+    "textShadowPresets": [
+      { "name": "Soft", "slug": "soft", "textShadow": "0 1px 2px rgba(0, 0, 0, 0.25)" }
+    ]
+    ```
+  - `styles.blocks.core/group.spacing.blockGap` — Group ブロックで縦・横の間隔を個別に指定可能（`{ "top": "…", "left": "…" }`。flex / grid レイアウト時に有効。[Gutenberg #81476](https://github.com/WordPress/gutenberg/pull/81476)）
+  - `position`（sticky / fixed）の `@tablet` / `@mobile` 別指定 — ビューポートごとに位置指定を切り替え可能（[Gutenberg #83094](https://github.com/WordPress/gutenberg/pull/83094)）
+
+#### WordPress 7.2 での挙動の変更（Raw JSON で書く場合の注意）
+
+7.2-beta3 で実際に確認した内容。
+
+- **grid レイアウトの列幅計算では、`(` を含む blockGap が使われない**
+  - 対象: `styles.spacing.blockGap` と `styles.blocks.{ブロック名}.spacing.blockGap`（ブロックごとのレイアウト CSS を作る際のフォールバック値として参照される）
+  - `wp_sanitize_block_gap_value()` が `(` `&` `=` `}` `/*` を含む値を除外するため、`clamp()` / `calc()` / `var(--…)` は捨てられ、既定の `0.5em` が使われる
+  - **プリセット参照（`var:preset|spacing|50`）も影響を受ける**。グローバルスタイルでは `var(--wp--preset--spacing--50)` に変換済みのため `(` を含む
+  - 影響が出るのは、列数（`columnCount`）と最小列幅（`minimumColumnWidth`）を両方指定した grid の列幅計算（`(100% - (0.5em * (列数 - 1))) / 列数`）。`:root :where(.is-layout-grid){gap: …}` などの通常の gap 出力には `clamp()` やプリセットもそのまま使われる
+  - 列幅計算にも反映させたい場合は `3rem` のような単純な長さで指定する
+- **プリセット参照のスラッグがケバブケースに揃えられる** — 例: `var:preset|font-family|n27` は `--wp--preset--font-family--n-27` を指す（以前は存在しない CSS 変数を指していた）
+- **形の違う値は無視される** — 例: `"fontFamilies": ["Inter"]` のような値を書いても PHP の致命的エラーにならず、その値だけが捨てられる
 
 ---
 
@@ -118,6 +138,8 @@ default < blocks < theme < user  ← このプラグインはここに注入
 
 - **ライブプレビュー**（変更後のサイト外観プレビュー）は未実装。保存後に Site Editor / フロントで確認する運用。
 - `styles` の GUI 編集は Raw JSON モードで対応（専用 UI は未提供）。
+- `settings.spacing.blockGap` はトグルで `true`（間隔の CSS を出力し操作欄も表示）/ `false`（CSS は出力するが操作欄は非表示）を保存する。未設定（`null`、テーマが間隔に対応していない扱い）に戻すには「クリア」を使う。
+- トグルの表示は、オーバーライド → 外観ツール（オーバーライド側の `appearanceTools`）→ テーマの値 → 外観ツール（テーマ側の `appearanceTools`）→ WP デフォルトの順で決まる。コアは origin ごとに「その origin で未指定の項目だけ」を `appearanceTools` で true にするため、このプラグインで `appearanceTools` を ON にすると、テーマで明示的に OFF にしている項目も有効になる。
 - `settings.viewport`・`settings.typography.textIndent` 以外のオブジェクト型・文字列型・配列型の `settings` 項目（`textShadowPresets` などのプリセット、`backgroundClip` の許可値配列など）は、トグル UI 化せず Raw JSON モードで対応。トグル行はテーマ側の値が配列の場合も「有効」として表示する。
 - スタイルバリエーション（`styles/` ディレクトリ）の管理は対象外。
 

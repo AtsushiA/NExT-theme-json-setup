@@ -81,6 +81,31 @@ test.describe( 'NExT theme.json Setup admin page', () => {
 		await expect( page.locator( '#ntjs-raw-editor' ) ).toHaveValue( /"textIndent":\s*"all"/ );
 	} );
 
+	test( '外観ツールを ON にすると、対象の設定（ボーダー）が外観ツールにより有効と表示される', async ( { admin, page } ) => {
+		await admin.visitAdminPage(
+			'themes.php',
+			'page=next-theme-json-setup'
+		);
+
+		const sidebar = page.locator( '#ntjs-sidebar' );
+		const content = page.locator( '#ntjs-content' );
+
+		await sidebar.locator( '.ntjs-nav-item', { hasText: '一般' } ).click();
+		const appearanceToolsRow = content.locator( '.ntjs-setting-row' ).filter( {
+			has: page.locator( '.ntjs-setting-label', { hasText: '外観ツール一括有効化' } ),
+		} );
+		await appearanceToolsRow.locator( '.ntjs-switch' ).click();
+		await expect( appearanceToolsRow.locator( 'input[type="checkbox"]' ) ).toBeChecked();
+
+		// コアと同様、オーバーライド側の appearanceTools はテーマの明示値より優先される.
+		await sidebar.locator( '.ntjs-nav-item', { hasText: 'ボーダー' } ).click();
+		const borderColorRow = content.locator( '.ntjs-setting-row' ).filter( {
+			has: page.locator( '.ntjs-setting-label', { hasText: 'ボーダーカラー' } ),
+		} );
+		await expect( borderColorRow.locator( 'input[type="checkbox"]' ) ).toBeChecked();
+		await expect( borderColorRow.locator( '.ntjs-setting-theme-val' ) ).toContainText( '外観ツール' );
+	} );
+
 	// このテスト環境（wp-env）はサイト言語を日本語（ja）に固定しているため、
 	// ここでは一時的に English (United States) へ切り替えて翻訳ファイル（languages/）が
 	// PHP 側（gettext）・JS 側（wp.i18n）の両方で正しく読み込まれることを確認し、最後に ja へ戻す.

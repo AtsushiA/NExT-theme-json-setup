@@ -138,10 +138,6 @@ msgstr "General"
 msgid "外観ツール一括有効化"
 msgstr "Enable all appearance tools"
 
-#: assets/js/admin.js:35
-msgid "ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。"
-msgstr "Enables all appearance controls at once, such as border, color, and typography. Takes precedence over each category's individual settings."
-
 #: assets/js/admin.js:40
 msgid "ルートパディング対応の整列"
 msgstr "Root-padding-aware alignment"
@@ -430,10 +426,6 @@ msgstr "Spacing"
 msgid "ブロック間隔（blockGap）"
 msgstr "Block spacing (blockGap)"
 
-#: assets/js/admin.js:305
-msgid "ブロック間の余白を Site Editor で設定できるようにします。"
-msgstr "Allows setting the gap between blocks in the Site Editor."
-
 #: assets/js/admin.js:310
 msgid "カスタムスペーシングサイズ"
 msgstr "Custom spacing size"
@@ -579,50 +571,50 @@ msgid "タブレット向けスタイル（@tablet）が適用される上限幅
 msgstr "The maximum width at which tablet styles (@tablet) apply. Specify a value greater than the mobile width (if lower, WordPress will use only the mobile width). Available in WordPress 7.1+."
 
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:694
-#: assets/js/admin.js:808
-#: assets/js/admin.js:906
+#: assets/js/admin.js:749
+#: assets/js/admin.js:868
+#: assets/js/admin.js:966
 #, js-format
 msgid "テーマのデフォルト: %s"
 msgstr "Theme default: %s"
 
-#: assets/js/admin.js:709
-#: assets/js/admin.js:824
-#: assets/js/admin.js:922
+#: assets/js/admin.js:769
+#: assets/js/admin.js:884
+#: assets/js/admin.js:982
 msgid "カスタム"
 msgstr "Custom"
 
-#: assets/js/admin.js:716
-#: assets/js/admin.js:929
+#: assets/js/admin.js:776
+#: assets/js/admin.js:989
 msgid "ON"
 msgstr "ON"
 
-#: assets/js/admin.js:716
-#: assets/js/admin.js:929
+#: assets/js/admin.js:776
+#: assets/js/admin.js:989
 msgid "OFF"
 msgstr "OFF"
 
-#: assets/js/admin.js:742
-#: assets/js/admin.js:855
-#: assets/js/admin.js:978
+#: assets/js/admin.js:802
+#: assets/js/admin.js:915
+#: assets/js/admin.js:1038
 msgid "× クリア"
 msgstr "× Clear"
 
-#: assets/js/admin.js:743
-#: assets/js/admin.js:856
-#: assets/js/admin.js:979
+#: assets/js/admin.js:803
+#: assets/js/admin.js:916
+#: assets/js/admin.js:1039
 msgid "このオーバーライドを削除"
 msgstr "Remove this override"
 
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:811
-#: assets/js/admin.js:909
+#: assets/js/admin.js:871
+#: assets/js/admin.js:969
 #, js-format
 msgid "WP のデフォルト: %s"
 msgstr "WP default: %s"
 
 #. translators: %s: エラーメッセージ.
-#: assets/js/admin.js:1167
+#: assets/js/admin.js:1227
 #, js-format
 msgid "読み込みに失敗しました: %s"
 msgstr "Failed to load: %s"
@@ -694,3 +686,19 @@ msgstr "Fixed position"
 #: assets/js/admin.js:391
 msgid "ブロックを画面に固定表示する fixed 配置を対応ブロックで使用できるようにします。WordPress 7.2 以降はビューポート（@tablet / @mobile）ごとの切り替えにも対応。"
 msgstr "Allows the fixed position, which pins a block to the viewport, on supported blocks. From WordPress 7.2 it can also be switched per viewport (@tablet / @mobile)."
+
+#: assets/js/admin.js:35
+msgid "ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。明示的に値を指定していない項目だけが有効になります（このプラグインで ON にした場合は、テーマ側で OFF にしている項目も有効になります）。"
+msgstr "Enables appearance controls such as border, color and typography all at once. Only settings without an explicit value are enabled (when turned ON in this plugin, settings the theme turns OFF are enabled as well)."
+
+#: assets/js/admin.js:305
+msgid "ブロック間の余白を Site Editor で設定できるようにします。ON で true（間隔の CSS を出力し操作欄も表示）、OFF で false（間隔の CSS は出力するが操作欄は非表示）を保存します。未設定（null）の場合はテーマが間隔に対応していない扱いになり、ブロックごとの既定の間隔が使われます（未設定に戻すには「クリア」を使用）。"
+msgstr "Allows setting the gap between blocks in the Site Editor. ON saves true (outputs gap CSS and shows the control); OFF saves false (outputs gap CSS but hides the control). When unset (null), the theme is treated as not supporting block gap and each block's default gap is used (use \"Clear\" to return to unset)."
+
+#: assets/js/admin.js:746
+msgid "外観ツール（appearanceTools）により有効"
+msgstr "Enabled by appearance tools (appearanceTools)"
+
+#: assets/js/admin.js:751
+msgid "WP のデフォルト: 未設定（テーマが対応していない扱い）"
+msgstr "WP default: unset (treated as unsupported by the theme)"

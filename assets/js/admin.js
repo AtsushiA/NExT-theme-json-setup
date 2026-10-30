@@ -32,7 +32,7 @@
 				{
 					key: [ 'settings', 'appearanceTools' ],
 					label: __( '外観ツール一括有効化', 'next-theme-json-setup' ),
-					description: __( 'ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。各カテゴリの個別設定より優先されます。', 'next-theme-json-setup' ),
+					description: __( 'ボーダー・カラー・タイポグラフィなどの外観コントロールをまとめて有効化します。明示的に値を指定していない項目だけが有効になります（このプラグインで ON にした場合は、テーマ側で OFF にしている項目も有効になります）。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 				{
@@ -302,8 +302,8 @@
 				{
 					key: [ 'settings', 'spacing', 'blockGap' ],
 					label: __( 'ブロック間隔（blockGap）', 'next-theme-json-setup' ),
-					description: __( 'ブロック間の余白を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
-					wpDefault: false,
+					description: __( 'ブロック間の余白を Site Editor で設定できるようにします。ON で true（間隔の CSS を出力し操作欄も表示）、OFF で false（間隔の CSS は出力するが操作欄は非表示）を保存します。未設定（null）の場合はテーマが間隔に対応していない扱いになり、ブロックごとの既定の間隔が使われます（未設定に戻すには「クリア」を使用）。', 'next-theme-json-setup' ),
+					wpDefault: null,
 				},
 				{
 					key: [ 'settings', 'spacing', 'customSpacingSize' ],
@@ -469,6 +469,59 @@
 		{ value: 'em', label: 'em', default: 0 },
 		{ value: 'rem', label: 'rem', default: 0 },
 	];
+
+	// =========================================================================
+	// 外観ツール（appearanceTools）で有効化される設定（WP_Theme_JSON::APPEARANCE_TOOLS_OPT_INS と一致させる）。
+	// コアは origin（テーマ / ユーザー）ごとに、その origin で未指定の項目だけを true にする。
+	// =========================================================================
+	var APPEARANCE_TOOLS_OPT_INS = [
+		'background.backgroundImage',
+		'background.backgroundSize',
+		'background.gradient',
+		'border.color',
+		'border.radius',
+		'border.style',
+		'border.width',
+		'color.link',
+		'color.heading',
+		'color.button',
+		'color.caption',
+		'dimensions.aspectRatio',
+		'dimensions.height',
+		'dimensions.minHeight',
+		'dimensions.minWidth',
+		'dimensions.width',
+		'position.sticky',
+		'spacing.blockGap',
+		'spacing.margin',
+		'spacing.padding',
+		'typography.lineHeight',
+		'typography.textColumns',
+	];
+
+	function isAppearanceToolsOptIn( keyArray ) {
+		return keyArray.length === 3 &&
+			keyArray[ 0 ] === 'settings' &&
+			APPEARANCE_TOOLS_OPT_INS.indexOf( keyArray[ 1 ] + '.' + keyArray[ 2 ] ) !== -1;
+	}
+
+	// オーバーライドが無い場合に適用される値と、その出どころを返す.
+	// オーバーライド側で appearanceTools を ON にすると、ユーザー origin の未指定項目が true になり、テーマの明示値より優先される.
+	function getInheritedValue( setting ) {
+		var themeVal = getNestedValue( themeData, setting.key );
+		var isOptIn  = isAppearanceToolsOptIn( setting.key );
+
+		if ( isOptIn && getNestedValue( overrideData, [ 'settings', 'appearanceTools' ] ) === true ) {
+			return { value: true, source: 'appearanceTools' };
+		}
+		if ( themeVal !== undefined ) {
+			return { value: themeVal, source: 'theme' };
+		}
+		if ( isOptIn && getNestedValue( themeData, [ 'settings', 'appearanceTools' ] ) === true ) {
+			return { value: true, source: 'appearanceTools' };
+		}
+		return { value: setting.wpDefault, source: 'wp' };
+	}
 
 	// =========================================================================
 	// ネストパスのユーティリティ
@@ -665,8 +718,10 @@
 		var themeVal    = getNestedValue( themeData, setting.key );
 		var isOverridden = overrideVal !== undefined;
 
-		// 実効値: オーバーライド → テーマ → WP デフォルト の優先順
-		var effectiveVal = isOverridden ? overrideVal : ( themeVal !== undefined ? themeVal : setting.wpDefault );
+		var inherited    = getInheritedValue( setting );
+
+		// 実効値: オーバーライド → 外観ツール（オーバーライド）→ テーマ → 外観ツール（テーマ）→ WP デフォルト の優先順
+		var effectiveVal = isOverridden ? overrideVal : inherited.value;
 
 		var row = document.createElement( 'div' );
 		row.className = 'ntjs-setting-row' + ( isOverridden ? ' is-overridden' : '' );
@@ -685,15 +740,20 @@
 		descEl.textContent = setting.description;
 		info.appendChild( descEl );
 
-		// テーマのデフォルト値の表示
-		if ( themeVal !== undefined ) {
+		// テーマのデフォルト値（または外観ツール・WP デフォルトによる値）の表示
+		var inheritedText = '';
+		if ( inherited.source === 'appearanceTools' ) {
+			inheritedText = __( '外観ツール（appearanceTools）により有効', 'next-theme-json-setup' );
+		} else if ( themeVal !== undefined ) {
+			/* translators: %s: 現在の値. */
+			inheritedText = sprintf( __( 'テーマのデフォルト: %s', 'next-theme-json-setup' ), formatSettingValue( themeVal ) );
+		} else if ( setting.wpDefault === null ) {
+			inheritedText = __( 'WP のデフォルト: 未設定（テーマが対応していない扱い）', 'next-theme-json-setup' );
+		}
+		if ( inheritedText ) {
 			var themeValEl  = document.createElement( 'div' );
 			themeValEl.className   = 'ntjs-setting-theme-val';
-			themeValEl.textContent = sprintf(
-				/* translators: %s: 現在の値. */
-				__( 'テーマのデフォルト: %s', 'next-theme-json-setup' ),
-				formatSettingValue( themeVal )
-			);
+			themeValEl.textContent = inheritedText;
 			info.appendChild( themeValEl );
 		}
 
