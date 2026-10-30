@@ -9,7 +9,7 @@ A WordPress plugin that lets you view, edit, and manage the active theme's `them
 ## Features
 
 - **Never touches theme files** — override settings are stored in the database (`wp_options`)
-- **48-item toggle switch UI** — lists theme.json v3 boolean settings by category (including new settings from WordPress 7.1)
+- **54-item toggle switch UI** — lists theme.json v3 boolean settings by category (including new settings from WordPress 7.2). Settings with multiple choices, such as text indent, are edited with a select box
 - **Viewport width settings (using a WordPress core component)** — set tablet/mobile breakpoint widths in px / em / rem using WordPress core's `UnitControl` (WordPress 7.1+, [Gutenberg #79104](https://github.com/WordPress/gutenberg/pull/79104))
 - **OnyX-style sidebar navigation** — switch between categories to review and change settings
 - **Custom / theme-default visualization** — overridden items are marked with a badge and can be cleared individually at any time
@@ -36,13 +36,13 @@ The plugin uses the `wp_theme_json_data_user` filter to apply saved settings at 
 | Category | # of settings | Main settings |
 |---|---|---|
 | General | 2 | Bulk-enable appearance tools, root-padding-aware alignment |
-| Background | 3 | Background image, background size/position (WP 6.5 / 6.6+), gradient background (WP 7.1+) |
+| Background | 4 | Background image, background size/position (WP 6.5 / 6.6+), gradient background (WP 7.1+), background clip (WP 7.2+) |
 | Border | 4 | Color, radius, style, width |
 | Color | 12 | Background color, custom color, gradient, palette, per-element (text / link / heading / button / caption) |
-| Typography | 13 | Font size, line height, letter spacing, text align, writing mode, etc. |
+| Typography | 16 | Font size, line height, letter spacing, text align, writing mode, text indent (WP 7.0+, select), text shadow / default text shadow presets (WP 7.2+), etc. |
 | Spacing | 5 | Block gap, margin, padding, spacing presets |
-| Dimensions | 4 | Min height, aspect ratio, min width (WP 7.1+) |
-| Position | 1 | Sticky positioning |
+| Dimensions | 6 | Min height, aspect ratio, min width (WP 7.1+), width / height (WP 7.0+) |
+| Position | 2 | Sticky positioning, fixed positioning (per-viewport since WP 7.2) |
 | Shadow | 1 | Default shadow presets |
 | Lightbox | 2 | Enable, allow editing (WP 6.4+) |
 | Block visibility | 1 | Allow editing show/hide UI (WP 7.1+) |

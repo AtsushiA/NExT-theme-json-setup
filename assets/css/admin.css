@@ -372,6 +372,11 @@
    iOS 風トグルスイッチ
    -------------------------------------------------------------------------- */
 
+/* セレクト設定（settings.typography.textIndent など）. */
+.ntjs-select {
+	min-width: 140px;
+}
+
 .ntjs-switch {
 	position: relative;
 	display: inline-block;

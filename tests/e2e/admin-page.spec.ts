@@ -60,6 +60,27 @@ test.describe( 'NExT theme.json Setup admin page', () => {
 		await expect( unitControlHost.locator( 'select' ) ).toBeVisible();
 	} );
 
+	test( '「タイポグラフィ」カテゴリでテキストインデント（セレクト）を変更するとカスタム扱いになる', async ( { admin, page } ) => {
+		await admin.visitAdminPage(
+			'themes.php',
+			'page=next-theme-json-setup'
+		);
+
+		const sidebar = page.locator( '#ntjs-sidebar' );
+		await sidebar.locator( '.ntjs-nav-item', { hasText: 'タイポグラフィ' } ).click();
+
+		const content = page.locator( '#ntjs-content' );
+		const textIndentRow = content.locator( '.ntjs-setting-row' ).filter( {
+			has: page.locator( '.ntjs-setting-label', { hasText: 'テキストインデント' } ),
+		} );
+		await expect( textIndentRow ).toBeVisible();
+
+		// 「すべての段落」を選ぶとオーバーライド（カスタムバッジ）になり、Raw JSON に "all" が反映される.
+		await textIndentRow.locator( 'select.ntjs-select' ).selectOption( { label: 'すべての段落' } );
+		await expect( textIndentRow.locator( '.ntjs-badge--custom' ) ).toBeVisible();
+		await expect( page.locator( '#ntjs-raw-editor' ) ).toHaveValue( /"textIndent":\s*"all"/ );
+	} );
+
 	// このテスト環境（wp-env）はサイト言語を日本語（ja）に固定しているため、
 	// ここでは一時的に English (United States) へ切り替えて翻訳ファイル（languages/）が
 	// PHP 側（gettext）・JS 側（wp.i18n）の両方で正しく読み込まれることを確認し、最後に ja へ戻す.

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: NExT theme.json Setup 0.4.0\n"
+"Project-Id-Version: NExT theme.json Setup 0.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/next-theme-json-setup\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-09T14:02:40+00:00\n"
+"POT-Creation-Date: 2026-10-30T11:39:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: next-theme-json-setup\n"
@@ -178,446 +178,519 @@ msgstr ""
 msgid "ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:73
-msgid "ボーダー"
+#: assets/js/admin.js:71
+msgid "背景のクリップ（background-clip）"
 msgstr ""
 
-#: assets/js/admin.js:78
-msgid "ボーダーカラー"
+#: assets/js/admin.js:72
+msgid "背景（色・グラデーション・画像）の描画範囲を設定できるようにします。「text」を選ぶと背景を文字の形に切り抜くグラデーション文字などを表現できます。ON にするとすべての値を許可します（許可する値を配列で限定する場合は Raw JSON モードで指定）。WordPress 7.2 以降で利用可能。"
 msgstr ""
 
 #: assets/js/admin.js:79
-msgid "ブロックのボーダーカラーを Site Editor で設定できるようにします。"
+msgid "ボーダー"
 msgstr ""
 
 #: assets/js/admin.js:84
-msgid "角丸（border-radius）"
+msgid "ボーダーカラー"
 msgstr ""
 
 #: assets/js/admin.js:85
-msgid "ブロックの角丸を Site Editor で設定できるようにします。"
+msgid "ブロックのボーダーカラーを Site Editor で設定できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:90
-msgid "ボーダースタイル"
+msgid "角丸（border-radius）"
 msgstr ""
 
 #: assets/js/admin.js:91
-msgid "solid / dashed / dotted などのボーダースタイルを Site Editor で設定できるようにします。"
+msgid "ブロックの角丸を Site Editor で設定できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:96
-msgid "ボーダー幅"
+msgid "ボーダースタイル"
 msgstr ""
 
 #: assets/js/admin.js:97
+msgid "solid / dashed / dotted などのボーダースタイルを Site Editor で設定できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:102
+msgid "ボーダー幅"
+msgstr ""
+
+#: assets/js/admin.js:103
 msgid "ボーダーの幅を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:104
+#: assets/js/admin.js:110
 msgid "カラー"
 msgstr ""
 
-#: assets/js/admin.js:109
+#: assets/js/admin.js:115
 msgid "背景色"
 msgstr ""
 
-#: assets/js/admin.js:110
+#: assets/js/admin.js:116
 msgid "ブロックの背景色を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:115
+#: assets/js/admin.js:121
 msgid "カスタムカラー"
 msgstr ""
 
-#: assets/js/admin.js:116
+#: assets/js/admin.js:122
 msgid "カラーピッカーで任意の色を指定できるようにします。false にするとテーマのプリセットのみに制限されます。"
 msgstr ""
 
-#: assets/js/admin.js:121
+#: assets/js/admin.js:127
 msgid "カスタムデュオトーン"
 msgstr ""
 
-#: assets/js/admin.js:122
+#: assets/js/admin.js:128
 msgid "ユーザーが独自のデュオトーンフィルターを作成できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:127
+#: assets/js/admin.js:133
 msgid "カスタムグラデーション"
 msgstr ""
 
-#: assets/js/admin.js:128
+#: assets/js/admin.js:134
 msgid "ユーザーが独自のグラデーションを作成できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:133
+#: assets/js/admin.js:139
 msgid "デフォルトデュオトーン"
 msgstr ""
 
-#: assets/js/admin.js:134
+#: assets/js/admin.js:140
 msgid "WordPress が提供するデフォルトのデュオトーンフィルタープリセットを表示します。"
 msgstr ""
 
-#: assets/js/admin.js:139
+#: assets/js/admin.js:145
 msgid "デフォルトグラデーション"
 msgstr ""
 
-#: assets/js/admin.js:140
+#: assets/js/admin.js:146
 msgid "WordPress が提供するデフォルトのグラデーションプリセットを表示します。"
 msgstr ""
 
-#: assets/js/admin.js:145
+#: assets/js/admin.js:151
 msgid "デフォルトカラーパレット"
 msgstr ""
 
-#: assets/js/admin.js:146
+#: assets/js/admin.js:152
 msgid "WordPress が提供するデフォルトのカラーパレットを表示します。"
 msgstr ""
 
-#: assets/js/admin.js:151
+#: assets/js/admin.js:157
 msgid "リンクカラー"
 msgstr ""
 
-#: assets/js/admin.js:152
+#: assets/js/admin.js:158
 msgid "リンクテキストの色を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:157
+#: assets/js/admin.js:163
 msgid "テキストカラー"
 msgstr ""
 
-#: assets/js/admin.js:158
+#: assets/js/admin.js:164
 msgid "ブロックのテキスト色を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:163
+#: assets/js/admin.js:169
 msgid "見出しカラー"
 msgstr ""
 
-#: assets/js/admin.js:164
+#: assets/js/admin.js:170
 msgid "見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:169
+#: assets/js/admin.js:175
 msgid "ボタンカラー"
 msgstr ""
 
-#: assets/js/admin.js:170
+#: assets/js/admin.js:176
 msgid "ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:175
+#: assets/js/admin.js:181
 msgid "キャプションカラー"
 msgstr ""
 
-#: assets/js/admin.js:176
+#: assets/js/admin.js:182
 msgid "キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:183
+#: assets/js/admin.js:189
 msgid "タイポグラフィ"
 msgstr ""
 
-#: assets/js/admin.js:188
+#: assets/js/admin.js:194
 msgid "カスタムフォントサイズ"
 msgstr ""
 
-#: assets/js/admin.js:189
+#: assets/js/admin.js:195
 msgid "プリセット以外の任意のフォントサイズを入力できるようにします。false にするとプリセットのみに制限されます。"
 msgstr ""
 
-#: assets/js/admin.js:194
+#: assets/js/admin.js:200
 msgid "ドロップキャップ"
 msgstr ""
 
-#: assets/js/admin.js:195
+#: assets/js/admin.js:201
 msgid "段落の最初の文字を大きく装飾するドロップキャップを使用できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:200
+#: assets/js/admin.js:206
 msgid "フルードタイポグラフィ"
 msgstr ""
 
-#: assets/js/admin.js:201
+#: assets/js/admin.js:207
 msgid "ビューポートサイズに応じてフォントサイズが滑らかに変化するレスポンシブなタイポグラフィを有効にします。"
 msgstr ""
 
-#: assets/js/admin.js:206
+#: assets/js/admin.js:212
 msgid "フォントスタイル"
 msgstr ""
 
-#: assets/js/admin.js:207
+#: assets/js/admin.js:213
 msgid "イタリックなどのフォントスタイルを Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:212
+#: assets/js/admin.js:218
 msgid "フォントウェイト"
 msgstr ""
 
-#: assets/js/admin.js:213
+#: assets/js/admin.js:219
 msgid "フォントの太さ（Thin 〜 Black）を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:218
+#: assets/js/admin.js:224
 msgid "文字間隔（letter-spacing）"
 msgstr ""
 
-#: assets/js/admin.js:219
+#: assets/js/admin.js:225
 msgid "文字間隔を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:224
+#: assets/js/admin.js:230
 msgid "行の高さ（line-height）"
 msgstr ""
 
-#: assets/js/admin.js:225
+#: assets/js/admin.js:231
 msgid "行間を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:230
+#: assets/js/admin.js:236
 msgid "テキストカラム数"
 msgstr ""
 
-#: assets/js/admin.js:231
+#: assets/js/admin.js:237
 msgid "テキストを複数カラムで表示する設定を Site Editor で使用できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:236
+#: assets/js/admin.js:242
 msgid "テキスト装飾"
 msgstr ""
 
-#: assets/js/admin.js:237
+#: assets/js/admin.js:243
 msgid "下線・打ち消し線などのテキスト装飾を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:242
+#: assets/js/admin.js:248
 msgid "テキスト変換（大文字/小文字）"
 msgstr ""
 
-#: assets/js/admin.js:243
+#: assets/js/admin.js:249
 msgid "uppercase / lowercase / capitalize などのテキスト変換を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:248
+#: assets/js/admin.js:254
 msgid "縦書き（writing-mode）"
 msgstr ""
 
-#: assets/js/admin.js:249
+#: assets/js/admin.js:255
 msgid "縦書きなどのテキスト方向を Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:254
+#: assets/js/admin.js:260
 msgid "テキスト配置"
 msgstr ""
 
-#: assets/js/admin.js:255
+#: assets/js/admin.js:261
 msgid "テキストの左揃え・中央揃え・右揃えを Site Editor で設定できるようにします。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:260
+#: assets/js/admin.js:266
 msgid "デフォルトフォントサイズ"
 msgstr ""
 
-#: assets/js/admin.js:261
+#: assets/js/admin.js:267
 msgid "WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:268
-msgid "スペーシング"
+#: assets/js/admin.js:272
+msgid "テキストシャドウ"
 msgstr ""
 
 #: assets/js/admin.js:273
-msgid "ブロック間隔（blockGap）"
+msgid "テキストシャドウを Site Editor やブロックで設定できるようにします。WordPress 7.2 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:274
-msgid "ブロック間の余白を Site Editor で設定できるようにします。"
+#: assets/js/admin.js:278
+msgid "デフォルトテキストシャドウプリセット"
 msgstr ""
 
 #: assets/js/admin.js:279
-msgid "カスタムスペーシングサイズ"
+msgid "WordPress が提供するデフォルトのテキストシャドウプリセットを表示します。独自プリセットは Raw JSON モードで settings.typography.textShadowPresets に定義します。WordPress 7.2 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:280
-msgid "プリセット以外の任意の余白サイズを入力できるようにします。"
+#: assets/js/admin.js:284
+msgid "テキストインデント（text-indent）"
 msgstr ""
 
 #: assets/js/admin.js:285
-msgid "マージン（外側の余白）"
+msgid "段落の 1 行目の字下げを設定できるようにします。「2 段落目以降」は連続する段落の 2 つ目以降のみ、「すべての段落」は全段落に字下げを適用します。WordPress 7.0 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:286
-msgid "ブロックの外側の余白（margin）を Site Editor で設定できるようにします。"
+#: assets/js/admin.js:289
+msgid "2 段落目以降"
+msgstr ""
+
+#: assets/js/admin.js:290
+msgid "すべての段落"
 msgstr ""
 
 #: assets/js/admin.js:291
-msgid "パディング（内側の余白）"
+msgid "無効"
 msgstr ""
 
-#: assets/js/admin.js:292
-msgid "ブロックの内側の余白（padding）を Site Editor で設定できるようにします。"
+#: assets/js/admin.js:299
+msgid "スペーシング"
 msgstr ""
 
-#: assets/js/admin.js:297
-msgid "デフォルトスペーシングサイズ"
-msgstr ""
-
-#: assets/js/admin.js:298
-msgid "WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。"
+#: assets/js/admin.js:304
+msgid "ブロック間隔（blockGap）"
 msgstr ""
 
 #: assets/js/admin.js:305
-msgid "ディメンション"
+msgid "ブロック間の余白を Site Editor で設定できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:310
-msgid "最小高さ（min-height）"
+msgid "カスタムスペーシングサイズ"
 msgstr ""
 
 #: assets/js/admin.js:311
-msgid "対応ブロックの最小高さを Site Editor で設定できるようにします。"
+msgid "プリセット以外の任意の余白サイズを入力できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:316
-msgid "アスペクト比"
+msgid "マージン（外側の余白）"
 msgstr ""
 
 #: assets/js/admin.js:317
-msgid "対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。"
+msgid "ブロックの外側の余白（margin）を Site Editor で設定できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:322
-msgid "デフォルトアスペクト比プリセット"
+msgid "パディング（内側の余白）"
 msgstr ""
 
 #: assets/js/admin.js:323
-msgid "WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。"
+msgid "ブロックの内側の余白（padding）を Site Editor で設定できるようにします。"
 msgstr ""
 
 #: assets/js/admin.js:328
-msgid "最小幅（min-width）"
+msgid "デフォルトスペーシングサイズ"
 msgstr ""
 
 #: assets/js/admin.js:329
-msgid "対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。"
+msgid "WordPress が提供するデフォルトのスペーシングサイズプリセットを表示します。WordPress 6.6 以降で利用可能。"
 msgstr ""
 
 #: assets/js/admin.js:336
-msgid "ポジション"
+msgid "ディメンション"
 msgstr ""
 
 #: assets/js/admin.js:341
-msgid "スティッキーポジション"
+msgid "最小高さ（min-height）"
 msgstr ""
 
 #: assets/js/admin.js:342
-msgid "ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。"
+msgid "対応ブロックの最小高さを Site Editor で設定できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:349
-msgid "シャドウ"
+#: assets/js/admin.js:347
+msgid "アスペクト比"
+msgstr ""
+
+#: assets/js/admin.js:348
+msgid "対応ブロックのアスペクト比（縦横比）を Site Editor で設定できるようにします。WordPress 6.5 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:353
+msgid "デフォルトアスペクト比プリセット"
 msgstr ""
 
 #: assets/js/admin.js:354
+msgid "WordPress が提供するデフォルトのアスペクト比プリセット（1:1 / 4:3 / 16:9 など）を表示します。WordPress 6.6 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:359
+msgid "最小幅（min-width）"
+msgstr ""
+
+#: assets/js/admin.js:360
+msgid "対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:365
+msgid "幅（width）"
+msgstr ""
+
+#: assets/js/admin.js:366
+msgid "対応ブロックの幅を Site Editor で設定できるようにします。WordPress 7.0 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:371
+msgid "高さ（height）"
+msgstr ""
+
+#: assets/js/admin.js:372
+msgid "対応ブロックの高さを Site Editor で設定できるようにします。WordPress 7.0 以降で利用可能。"
+msgstr ""
+
+#: assets/js/admin.js:379
+msgid "ポジション"
+msgstr ""
+
+#: assets/js/admin.js:384
+msgid "スティッキーポジション"
+msgstr ""
+
+#: assets/js/admin.js:385
+msgid "ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。"
+msgstr ""
+
+#: assets/js/admin.js:390
+msgid "固定ポジション"
+msgstr ""
+
+#: assets/js/admin.js:391
+msgid "ブロックを画面に固定表示する fixed 配置を対応ブロックで使用できるようにします。WordPress 7.2 以降はビューポート（@tablet / @mobile）ごとの切り替えにも対応。"
+msgstr ""
+
+#: assets/js/admin.js:398
+msgid "シャドウ"
+msgstr ""
+
+#: assets/js/admin.js:403
 msgid "デフォルトシャドウプリセット"
 msgstr ""
 
-#: assets/js/admin.js:355
+#: assets/js/admin.js:404
 msgid "WordPress が提供する Natural / Deep / Sharp / Outlined / Crisp などのシャドウプリセットを表示します。"
 msgstr ""
 
-#: assets/js/admin.js:362
+#: assets/js/admin.js:411
 msgid "ライトボックス"
 msgstr ""
 
-#: assets/js/admin.js:367
+#: assets/js/admin.js:416
 msgid "ライトボックスを有効化"
 msgstr ""
 
-#: assets/js/admin.js:368
+#: assets/js/admin.js:417
 msgid "画像ブロックをクリックしたときにライトボックス（拡大表示）を使用します。WordPress 6.4 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:373
+#: assets/js/admin.js:422
 msgid "ライトボックス編集を許可"
 msgstr ""
 
-#: assets/js/admin.js:374
+#: assets/js/admin.js:423
 msgid "ユーザーが画像ブロックごとにライトボックスの有効・無効を変更できるようにします。"
 msgstr ""
 
-#: assets/js/admin.js:381
+#: assets/js/admin.js:430
 msgid "ブロックの表示/非表示"
 msgstr ""
 
-#: assets/js/admin.js:386
+#: assets/js/admin.js:435
 msgid "表示/非表示設定の編集を許可"
 msgstr ""
 
-#: assets/js/admin.js:387
+#: assets/js/admin.js:436
 msgid "エディター上でブロックごとの表示・非表示（デバイス別の切り替えなど）を編集できるようにします。false にすると編集 UI が非表示になりますが、既存の表示設定自体は変更されません。WordPress 7.1 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:394
+#: assets/js/admin.js:443
 msgid "ビューポート"
 msgstr ""
 
-#: assets/js/admin.js:401
+#: assets/js/admin.js:450
 msgid "モバイル幅"
 msgstr ""
 
-#: assets/js/admin.js:402
+#: assets/js/admin.js:451
 msgid "モバイル向けスタイル（@mobile）が適用される上限幅です。この幅以下の画面がモバイル扱いになります。WordPress 7.1 以降で利用可能。"
 msgstr ""
 
-#: assets/js/admin.js:407
+#: assets/js/admin.js:456
 msgid "タブレット幅"
 msgstr ""
 
-#: assets/js/admin.js:408
+#: assets/js/admin.js:457
 msgid "タブレット向けスタイル（@tablet）が適用される上限幅です。モバイル幅を上回る値を指定してください（下回る場合は WP 側でモバイル幅のみが使用されます）。WordPress 7.1 以降で利用可能。"
 msgstr ""
 
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:640
-#: assets/js/admin.js:739
+#: assets/js/admin.js:694
+#: assets/js/admin.js:808
+#: assets/js/admin.js:906
 #, js-format
 msgid "テーマのデフォルト: %s"
 msgstr ""
 
-#: assets/js/admin.js:655
-#: assets/js/admin.js:755
+#: assets/js/admin.js:709
+#: assets/js/admin.js:824
+#: assets/js/admin.js:922
 msgid "カスタム"
 msgstr ""
 
-#: assets/js/admin.js:662
-#: assets/js/admin.js:762
+#: assets/js/admin.js:716
+#: assets/js/admin.js:929
 msgid "ON"
 msgstr ""
 
-#: assets/js/admin.js:662
-#: assets/js/admin.js:762
+#: assets/js/admin.js:716
+#: assets/js/admin.js:929
 msgid "OFF"
 msgstr ""
 
-#: assets/js/admin.js:688
-#: assets/js/admin.js:811
+#: assets/js/admin.js:742
+#: assets/js/admin.js:855
+#: assets/js/admin.js:978
 msgid "× クリア"
 msgstr ""
 
-#: assets/js/admin.js:689
-#: assets/js/admin.js:812
+#: assets/js/admin.js:743
+#: assets/js/admin.js:856
+#: assets/js/admin.js:979
 msgid "このオーバーライドを削除"
 msgstr ""
 
 #. translators: %s: 現在の値.
-#: assets/js/admin.js:742
+#: assets/js/admin.js:811
+#: assets/js/admin.js:909
 #, js-format
 msgid "WP のデフォルト: %s"
 msgstr ""
 
 #. translators: %s: エラーメッセージ.
-#: assets/js/admin.js:1000
+#: assets/js/admin.js:1167
 #, js-format
 msgid "読み込みに失敗しました: %s"
 msgstr ""

@@ -64,6 +64,12 @@
 					key: [ 'settings', 'background', 'gradient' ],
 					label: __( 'グラデーション背景', 'next-theme-json-setup' ),
 					description: __( 'ブロックの背景としてグラデーションを設定できるようにします。背景画像と併用できます。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
+					wpDefault: true,
+				},
+				{
+					key: [ 'settings', 'background', 'backgroundClip' ],
+					label: __( '背景のクリップ（background-clip）', 'next-theme-json-setup' ),
+					description: __( '背景（色・グラデーション・画像）の描画範囲を設定できるようにします。「text」を選ぶと背景を文字の形に切り抜くグラデーション文字などを表現できます。ON にするとすべての値を許可します（許可する値を配列で限定する場合は Raw JSON モードで指定）。WordPress 7.2 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
@@ -150,7 +156,7 @@
 					key: [ 'settings', 'color', 'link' ],
 					label: __( 'リンクカラー', 'next-theme-json-setup' ),
 					description: __( 'リンクテキストの色を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
-					wpDefault: true,
+					wpDefault: false,
 				},
 				{
 					key: [ 'settings', 'color', 'text' ],
@@ -162,19 +168,19 @@
 					key: [ 'settings', 'color', 'heading' ],
 					label: __( '見出しカラー', 'next-theme-json-setup' ),
 					description: __( '見出し要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
-					wpDefault: false,
+					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'button' ],
 					label: __( 'ボタンカラー', 'next-theme-json-setup' ),
 					description: __( 'ボタン要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
-					wpDefault: false,
+					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'color', 'caption' ],
 					label: __( 'キャプションカラー', 'next-theme-json-setup' ),
 					description: __( 'キャプション要素の色を Site Editor で個別に設定できるようにします。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
-					wpDefault: false,
+					wpDefault: true,
 				},
 			],
 		},
@@ -217,7 +223,7 @@
 					key: [ 'settings', 'typography', 'letterSpacing' ],
 					label: __( '文字間隔（letter-spacing）', 'next-theme-json-setup' ),
 					description: __( '文字間隔を Site Editor で設定できるようにします。', 'next-theme-json-setup' ),
-					wpDefault: false,
+					wpDefault: true,
 				},
 				{
 					key: [ 'settings', 'typography', 'lineHeight' ],
@@ -260,6 +266,31 @@
 					label: __( 'デフォルトフォントサイズ', 'next-theme-json-setup' ),
 					description: __( 'WordPress が提供するデフォルトのフォントサイズプリセット（Small 〜 Extra Large）を表示します。WordPress 6.6 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: true,
+				},
+				{
+					key: [ 'settings', 'typography', 'textShadow' ],
+					label: __( 'テキストシャドウ', 'next-theme-json-setup' ),
+					description: __( 'テキストシャドウを Site Editor やブロックで設定できるようにします。WordPress 7.2 以降で利用可能。', 'next-theme-json-setup' ),
+					wpDefault: true,
+				},
+				{
+					key: [ 'settings', 'typography', 'defaultTextShadowPresets' ],
+					label: __( 'デフォルトテキストシャドウプリセット', 'next-theme-json-setup' ),
+					description: __( 'WordPress が提供するデフォルトのテキストシャドウプリセットを表示します。独自プリセットは Raw JSON モードで settings.typography.textShadowPresets に定義します。WordPress 7.2 以降で利用可能。', 'next-theme-json-setup' ),
+					wpDefault: true,
+				},
+				{
+					key: [ 'settings', 'typography', 'textIndent' ],
+					label: __( 'テキストインデント（text-indent）', 'next-theme-json-setup' ),
+					description: __( '段落の 1 行目の字下げを設定できるようにします。「2 段落目以降」は連続する段落の 2 つ目以降のみ、「すべての段落」は全段落に字下げを適用します。WordPress 7.0 以降で利用可能。', 'next-theme-json-setup' ),
+					// ブール値ではなく文字列の選択肢を持つため、セレクトボックス（buildSelectSettingRow）で描画する.
+					type: 'select',
+					options: [
+						{ value: 'subsequent', label: __( '2 段落目以降', 'next-theme-json-setup' ) },
+						{ value: 'all', label: __( 'すべての段落', 'next-theme-json-setup' ) },
+						{ value: false, label: __( '無効', 'next-theme-json-setup' ) },
+					],
+					wpDefault: 'subsequent',
 				},
 			],
 		},
@@ -329,6 +360,18 @@
 					description: __( '対応ブロックの最小幅を Site Editor で設定できるようにします。WordPress 7.1 以降で利用可能。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
+				{
+					key: [ 'settings', 'dimensions', 'width' ],
+					label: __( '幅（width）', 'next-theme-json-setup' ),
+					description: __( '対応ブロックの幅を Site Editor で設定できるようにします。WordPress 7.0 以降で利用可能。', 'next-theme-json-setup' ),
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'dimensions', 'height' ],
+					label: __( '高さ（height）', 'next-theme-json-setup' ),
+					description: __( '対応ブロックの高さを Site Editor で設定できるようにします。WordPress 7.0 以降で利用可能。', 'next-theme-json-setup' ),
+					wpDefault: false,
+				},
 			],
 		},
 		{
@@ -340,6 +383,12 @@
 					key: [ 'settings', 'position', 'sticky' ],
 					label: __( 'スティッキーポジション', 'next-theme-json-setup' ),
 					description: __( 'ブロックをスクロール時に画面上部に固定する sticky 配置を対応ブロックで使用できるようにします。', 'next-theme-json-setup' ),
+					wpDefault: false,
+				},
+				{
+					key: [ 'settings', 'position', 'fixed' ],
+					label: __( '固定ポジション', 'next-theme-json-setup' ),
+					description: __( 'ブロックを画面に固定表示する fixed 配置を対応ブロックで使用できるようにします。WordPress 7.2 以降はビューポート（@tablet / @mobile）ごとの切り替えにも対応。', 'next-theme-json-setup' ),
 					wpDefault: false,
 				},
 			],
@@ -597,9 +646,14 @@
 		list.className = 'ntjs-setting-list';
 
 		cat.settings.forEach( function ( setting ) {
-			var row = ( cat.type === 'viewport' )
-				? buildViewportSettingRow( setting )
-				: buildSettingRow( setting );
+			var row;
+			if ( cat.type === 'viewport' ) {
+				row = buildViewportSettingRow( setting );
+			} else if ( setting.type === 'select' ) {
+				row = buildSelectSettingRow( setting );
+			} else {
+				row = buildSettingRow( setting );
+			}
 			list.appendChild( row );
 		} );
 
@@ -638,7 +692,7 @@
 			themeValEl.textContent = sprintf(
 				/* translators: %s: 現在の値. */
 				__( 'テーマのデフォルト: %s', 'next-theme-json-setup' ),
-				themeVal ? 'true' : 'false'
+				formatSettingValue( themeVal )
 			);
 			info.appendChild( themeValEl );
 		}
@@ -659,11 +713,11 @@
 		// トグルスイッチ
 		var label      = document.createElement( 'label' );
 		label.className   = 'ntjs-switch';
-		label.title = effectiveVal ? __( 'ON', 'next-theme-json-setup' ) : __( 'OFF', 'next-theme-json-setup' );
+		label.title = isSettingEnabled( effectiveVal ) ? __( 'ON', 'next-theme-json-setup' ) : __( 'OFF', 'next-theme-json-setup' );
 
 		var checkbox = document.createElement( 'input' );
 		checkbox.type    = 'checkbox';
-		checkbox.checked = effectiveVal === true;
+		checkbox.checked = isSettingEnabled( effectiveVal );
 
 		var track = document.createElement( 'span' );
 		track.className = 'ntjs-switch-track';
@@ -680,6 +734,119 @@
 		} );
 
 		control.appendChild( label );
+
+		// クリアボタン（オーバーライド中のみ表示）
+		if ( isOverridden ) {
+			var clearBtn  = document.createElement( 'button' );
+			clearBtn.className   = 'ntjs-clear-btn';
+			clearBtn.textContent = __( '× クリア', 'next-theme-json-setup' );
+			clearBtn.title       = __( 'このオーバーライドを削除', 'next-theme-json-setup' );
+			clearBtn.addEventListener( 'click', function () {
+				deleteNestedValue( overrideData, setting.key );
+				syncRawEditor();
+				updateOverrideBadge();
+				renderSidebar();
+				renderContent();
+			} );
+			control.appendChild( clearBtn );
+		}
+
+		row.appendChild( control );
+		return row;
+	}
+
+	// 設定値が「有効」とみなせるかを判定する.
+	// background.backgroundClip のように、true の代わりに許可値の配列（例: [ "text" ]）を取る設定もあるため配列も考慮する.
+	function isSettingEnabled( value ) {
+		if ( Array.isArray( value ) ) {
+			return value.length > 0;
+		}
+		return value === true;
+	}
+
+	// テーマのデフォルト値を表示用の文字列に変換する.
+	function formatSettingValue( value ) {
+		if ( typeof value === 'boolean' ) {
+			return value ? 'true' : 'false';
+		}
+		return JSON.stringify( value );
+	}
+
+	// =========================================================================
+	// セレクト設定行（settings.typography.textIndent など、文字列の選択肢を持つ設定）
+	// =========================================================================
+
+	function buildSelectSettingRow( setting ) {
+		var overrideVal  = getNestedValue( overrideData, setting.key );
+		var themeVal     = getNestedValue( themeData, setting.key );
+		var isOverridden = overrideVal !== undefined;
+
+		// 実効値: オーバーライド → テーマ → WP デフォルト の優先順
+		var effectiveVal = isOverridden ? overrideVal : ( themeVal !== undefined ? themeVal : setting.wpDefault );
+
+		var row = document.createElement( 'div' );
+		row.className = 'ntjs-setting-row' + ( isOverridden ? ' is-overridden' : '' );
+
+		// 左側：ラベル + 説明
+		var info = document.createElement( 'div' );
+		info.className = 'ntjs-setting-info';
+
+		var labelEl  = document.createElement( 'div' );
+		labelEl.className   = 'ntjs-setting-label';
+		labelEl.textContent = setting.label;
+		info.appendChild( labelEl );
+
+		var descEl  = document.createElement( 'div' );
+		descEl.className   = 'ntjs-setting-desc';
+		descEl.textContent = setting.description;
+		info.appendChild( descEl );
+
+		var defaultValEl  = document.createElement( 'div' );
+		defaultValEl.className   = 'ntjs-setting-theme-val';
+		if ( themeVal !== undefined ) {
+			/* translators: %s: 現在の値. */
+			defaultValEl.textContent = sprintf( __( 'テーマのデフォルト: %s', 'next-theme-json-setup' ), formatSettingValue( themeVal ) );
+		} else {
+			/* translators: %s: 現在の値. */
+			defaultValEl.textContent = sprintf( __( 'WP のデフォルト: %s', 'next-theme-json-setup' ), formatSettingValue( setting.wpDefault ) );
+		}
+		info.appendChild( defaultValEl );
+
+		row.appendChild( info );
+
+		// 右側：バッジ + セレクトボックス + クリアボタン
+		var control = document.createElement( 'div' );
+		control.className = 'ntjs-setting-control';
+
+		if ( isOverridden ) {
+			var badge  = document.createElement( 'span' );
+			badge.className   = 'ntjs-badge ntjs-badge--custom';
+			badge.textContent = __( 'カスタム', 'next-theme-json-setup' );
+			control.appendChild( badge );
+		}
+
+		// option の value は文字列しか持てないため、選択肢のインデックスで値を対応付ける.
+		var select = document.createElement( 'select' );
+		select.className = 'ntjs-select';
+		select.setAttribute( 'aria-label', setting.label );
+
+		setting.options.forEach( function ( option, index ) {
+			var optionEl  = document.createElement( 'option' );
+			optionEl.value       = String( index );
+			optionEl.textContent = option.label;
+			optionEl.selected    = option.value === effectiveVal;
+			select.appendChild( optionEl );
+		} );
+
+		select.addEventListener( 'change', function () {
+			setNestedValue( overrideData, setting.key, setting.options[ Number( select.value ) ].value );
+			syncRawEditor();
+			updateOverrideBadge();
+			renderSidebar();
+			renderContent();
+		} );
+
+		control.appendChild( select );
 
 		// クリアボタン（オーバーライド中のみ表示）
 		if ( isOverridden ) {

@@ -8,7 +8,7 @@
 | **スラッグ** | next-theme-json-setup |
 | **テキストドメイン** | next-theme-json-setup |
 | **ディレクトリ名** | NExT-theme-json-setup |
-| **バージョン** | 0.5.0 |
+| **バージョン** | 0.6.0 |
 
 ---
 
@@ -65,13 +65,13 @@ default < blocks < theme < user  ← このプラグインはここに注入
 |---|---|
 | `appearanceTools` | 外観ツール群（border / color / dimensions / position / spacing / typography / background）の一括有効化 |
 | `useRootPaddingAwareAlignments` | ルートパディングを考慮した全幅整列 |
-| `background` | 背景画像・背景サイズ・グラデーション（6.5〜7.1 で順次追加） |
+| `background` | 背景画像・背景サイズ・グラデーション・背景のクリップ（`backgroundClip`、7.2 で追加。`true` または許可値の配列）（6.5〜7.2 で順次追加） |
 | `border` | 幅・スタイル・色・角丸 |
 | `color` | パレット・グラデーション・デュオトーン・要素別カラー（text / link / heading / button / caption） |
-| `typography` | フォントサイズ・行間・文字間隔・テキスト配置・縦書きなど |
+| `typography` | フォントサイズ・行間・文字間隔・テキスト配置・縦書き・テキストインデント（`textIndent`、7.0 で追加。`"subsequent"` / `"all"` / `false` をセレクトボックスで編集）・テキストシャドウ（`textShadow` / `defaultTextShadowPresets` / `textShadowPresets`、7.2 で追加）など |
 | `spacing` | margin / padding / blockGap・スペーシングプリセット |
-| `dimensions` | 最小高さ・アスペクト比・最小幅（`minWidth`、7.1 で追加） |
-| `position` | sticky 対応 |
+| `dimensions` | 最小高さ・アスペクト比・幅／高さ（`width` / `height`、7.0 で追加）・最小幅（`minWidth`、7.1 で追加） |
+| `position` | sticky / fixed 対応（7.2 から `@tablet` / `@mobile` のビューポート別指定に対応） |
 | `shadow` | ボックスシャドウのプリセット |
 | `lightbox` | 画像ブロックのライトボックス（`blocks.core/image.lightbox`） |
 | `blockVisibility` | ブロックの表示/非表示編集 UI 制御（`allowEditing`、7.1 で追加） |
@@ -89,6 +89,12 @@ default < blocks < theme < user  ← このプラグインはここに注入
   - `dimensions.minWidth` — 最小幅（グローバル / ブロック単位。`settings.dimensions.minWidth` を有効化したブロックが対象）
   - `blocks.{blockName}.@tablet` / `@mobile` — `settings.viewport` のブレークポイントに基づくレスポンシブスタイル
   - `blocks.core/navigation-link.-current` / `:hover` / `:focus` / `:focus-visible` / `:active` — ナビゲーションリンクの状態別スタイル拡張
+- **WordPress 7.2 で追加**（Raw JSON モードで編集）
+  - `background.backgroundClip` — 背景のクリップ（グローバル / ブロック単位。`text` でグラデーション文字などを表現）
+  - `elements.label` — フォームの `label` 要素（`button` / `textInput` / `select` に加え、Global Styles でフォーム要素を一括スタイリング可能に）
+  - `elements.textInput` の状態 — `:required` / `:user-valid` / `:user-invalid` / `:focus` / `:focus-visible` / `::placeholder`
+  - `elements.select` の状態 — `:hover` / `:focus` / `:focus-visible` / `:active`
+  - `settings.typography.textShadowPresets` — テキストシャドウのプリセット定義（`--wp--preset--text-shadow--{slug}` を出力）
 
 ---
 
@@ -106,12 +112,13 @@ default < blocks < theme < user  ← このプラグインはここに注入
 | 8 | **リセット** | プラグインによる全オーバーライドを削除 |
 | 9 | **ビューポート幅設定** | `settings.viewport.mobile` / `tablet` を有効化トグル＋ WordPress コアの UnitControl（px / em / rem 切り替え）で編集 |
 | 10 | **多言語対応（i18n）** | WordPress 標準の翻訳ファイル（.pot/.po/.mo・JS 翻訳 JSON）に対応。管理画面はサイト言語に応じて自動的に翻訳される |
+| 11 | **WordPress 7.2 対応** | `background.backgroundClip`・`typography.textShadow`・`typography.defaultTextShadowPresets`・`position.fixed`・`dimensions.width` / `height` のトグル、`typography.textIndent` のセレクトボックスを追加（トグル 48 → 54 項目、セレクト 1 項目） |
 
 ### 未実装 / 対象外
 
 - **ライブプレビュー**（変更後のサイト外観プレビュー）は未実装。保存後に Site Editor / フロントで確認する運用。
 - `styles` の GUI 編集は Raw JSON モードで対応（専用 UI は未提供）。
-- `settings.viewport` 以外のオブジェクト型・文字列型の `settings` 項目は、ブール値ではないためトグル UI 化せず Raw JSON モードで対応。
+- `settings.viewport`・`settings.typography.textIndent` 以外のオブジェクト型・文字列型・配列型の `settings` 項目（`textShadowPresets` などのプリセット、`backgroundClip` の許可値配列など）は、トグル UI 化せず Raw JSON モードで対応。トグル行はテーマ側の値が配列の場合も「有効」として表示する。
 - スタイルバリエーション（`styles/` ディレクトリ）の管理は対象外。
 
 ---
@@ -131,7 +138,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 
 ## 技術要件
 
-- **WordPress バージョン**: 6.6+（theme.json v3）。WordPress 7.1 未満の環境では `background.gradient` / `dimensions.minWidth` / `blockVisibility.allowEditing` / `viewport.mobile` / `viewport.tablet` などの新設定を ON にしても WP 側が未対応のため効果はない（保存自体は可能）。
+- **WordPress バージョン**: 6.6+（theme.json v3）。WordPress 7.1 未満の環境では `background.gradient` / `dimensions.minWidth` / `blockVisibility.allowEditing` / `viewport.mobile` / `viewport.tablet` など、7.2 未満の環境では `background.backgroundClip` / `typography.textShadow` / `typography.defaultTextShadowPresets` などの新設定を ON にしても WP 側が未対応のため効果はない（保存自体は可能）。
 - **PHP バージョン**: 8.0+
 - **権限**: `edit_theme_options`
 - **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_user` フィルターで適用（非破壊）
