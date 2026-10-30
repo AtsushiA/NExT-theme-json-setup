@@ -31,11 +31,14 @@
 WordPress の theme.json にはカスケード（優先順位）がある。
 
 ```
-default < blocks < theme < user  ← このプラグインはここに注入
+default < blocks < theme（テーマ < このプラグイン） < user
 ```
 
 - プラグインの設定は `wp_options`（キー: `next_theme_json_setup_overrides`）に JSON 文字列で保存する（autoload しない）。
-- `wp_theme_json_data_user` フィルターで、保存済み設定を `WP_Theme_JSON_Data::update_with()` を使って user レベルに注入する。
+- `wp_theme_json_data_theme` フィルターで、保存済み設定を `WP_Theme_JSON_Data::update_with()` を使って theme レベル（テーマの theme.json の上）に注入する。
+  - **theme レベルに注入する理由**: ブロックテーマでは、投稿エディター・サイトエディターとも `GlobalStylesRenderer` が REST API（`/wp/v2/global-styles/themes/{stylesheet}` ＋ ユーザーのグローバルスタイル投稿の生データ）からエディター設定（`__experimentalFeatures`）を作り直す。前者は theme レベルまでをマージして返し、後者はフィルターを通らないため、user レベル（`wp_theme_json_data_user`）に注入するとフロントの CSS には効いてもエディターの操作欄に反映されなかった（v0.6.0 で変更）。
+  - 優先順位: テーマの theme.json（子テーマ・クラシックテーマのテーマサポートを含む）< このプラグイン < サイトエディターでユーザーが保存したグローバルスタイル。
+  - `update_with()` は上書き側を独立した `WP_Theme_JSON` として構築してからマージするため、上書き側の `appearanceTools` は上書き側で未指定の項目を true にし、テーマの明示値より優先される。
 - これにより**テーマの `theme.json` を書き換えずに**設定をオーバーライドできる。バックアップやファイル書き込みは不要。
 
 > 設計初期は「theme.json への書き戻し／子テーマ出力＋バックアップ」を想定していたが、安全性（テーマ更新時の競合・破壊リスク回避）のため非破壊方式に変更した。
@@ -127,7 +130,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 | 3 | **状態の可視化** | 各設定について「テーマ/WP のデフォルト値」と「プラグインによるオーバーライド中（カスタム）」をバッジで区別 |
 | 4 | **個別クリア** | オーバーライド中の項目だけを解除してデフォルトに戻す |
 | 5 | **Raw JSON 編集モード** | 上級者向けに JSON を直接編集 |
-| 6 | **保存** | `wp_options` にオーバーライドとして保存（`wp_theme_json_data_user` で適用） |
+| 6 | **保存** | `wp_options` にオーバーライドとして保存（`wp_theme_json_data_theme` で適用） |
 | 7 | **バリデーション** | JSON パース・トップレベルキーのアローリスト・ペイロードサイズ上限（100KB） |
 | 8 | **リセット** | プラグインによる全オーバーライドを削除 |
 | 9 | **ビューポート幅設定** | `settings.viewport.mobile` / `tablet` を有効化トグル＋ WordPress コアの UnitControl（px / em / rem 切り替え）で編集 |
@@ -163,7 +166,7 @@ default < blocks < theme < user  ← このプラグインはここに注入
 - **WordPress バージョン**: 6.6+（theme.json v3）。WordPress 7.1 未満の環境では `background.gradient` / `dimensions.minWidth` / `blockVisibility.allowEditing` / `viewport.mobile` / `viewport.tablet` など、7.2 未満の環境では `background.backgroundClip` / `typography.textShadow` / `typography.defaultTextShadowPresets` などの新設定を ON にしても WP 側が未対応のため効果はない（保存自体は可能）。
 - **PHP バージョン**: 8.0+
 - **権限**: `edit_theme_options`
-- **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_user` フィルターで適用（非破壊）
+- **保存方式**: テーマを書き換えず `wp_options` に保存し、`wp_theme_json_data_theme` フィルターで適用（非破壊）
 - **REST API**: `register_rest_route` によるカスタムルート（`/next-theme-json/v1/`）
 - **フロントエンド**: vanilla JS（`assets/js/admin.js`）。ビルド工程なし。ビューポート幅入力のみ WordPress コアが提供する `wp-element` / `wp-components`（`UnitControl`）をスクリプト依存として読み込み、ビルド不要な `wp.element.createElement` 経由で描画。文字列の翻訳には `wp-i18n`（`wp.i18n.__` / `sprintf`）を使用
 - **多言語対応**: WordPress 標準の翻訳ファイル（`.pot`/`.po`/`.mo`・JS 翻訳 JSON）に準拠。詳細は「多言語対応（i18n）」を参照

@@ -78,7 +78,7 @@ class OverrideTest extends WP_UnitTestCase {
 		);
 
 		$override = new Next_Theme_Json_Override();
-		$theme_json = new \WP_Theme_JSON_Data( array( 'version' => 3 ), 'custom' );
+		$theme_json = new \WP_Theme_JSON_Data( array( 'version' => 3 ), 'theme' );
 
 		$result = $override->apply_overrides( $theme_json );
 
@@ -95,10 +95,54 @@ class OverrideTest extends WP_UnitTestCase {
 	 */
 	public function test_apply_overrides_noop_when_empty(): void {
 		$override = new Next_Theme_Json_Override();
-		$theme_json = new \WP_Theme_JSON_Data( array( 'version' => 3 ), 'custom' );
+		$theme_json = new \WP_Theme_JSON_Data( array( 'version' => 3 ), 'theme' );
 
 		$result = $override->apply_overrides( $theme_json );
 
 		$this->assertInstanceOf( \WP_Theme_JSON_Data::class, $result );
+	}
+
+	/**
+	 * register は theme レベルのフィルターに登録する.
+	 *
+	 * @return void
+	 */
+	public function test_register_hooks_theme_level_filter(): void {
+		$override = new Next_Theme_Json_Override();
+		$override->register();
+
+		$this->assertNotFalse( has_filter( 'wp_theme_json_data_theme', array( $override, 'apply_overrides' ) ) );
+		$this->assertFalse( has_filter( 'wp_theme_json_data_user', array( $override, 'apply_overrides' ) ) );
+
+		remove_filter( 'wp_theme_json_data_theme', array( $override, 'apply_overrides' ) );
+	}
+
+	/**
+	 * ブロックエディターが参照する REST のテーマ用グローバルスタイルにも上書きが反映される.
+	 *
+	 * @return void
+	 */
+	public function test_override_is_exposed_in_rest_theme_global_styles(): void {
+		Next_Theme_Json_Override::save(
+			array(
+				'version'  => 3,
+				'settings' => array( 'typography' => array( 'textIndent' => 'all' ) ),
+			)
+		);
+
+		$override = new Next_Theme_Json_Override();
+		$override->register();
+		\WP_Theme_JSON_Resolver::clean_cached_data();
+
+		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+		$request  = new \WP_REST_Request( 'GET', '/wp/v2/global-styles/themes/' . get_stylesheet() );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		remove_filter( 'wp_theme_json_data_theme', array( $override, 'apply_overrides' ) );
+		\WP_Theme_JSON_Resolver::clean_cached_data();
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertSame( 'all', $data['settings']['typography']['textIndent'] );
 	}
 }

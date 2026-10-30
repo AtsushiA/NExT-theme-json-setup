@@ -15,7 +15,7 @@
 NExT-theme-json-setup/
 ├── next-theme-json-setup.php                    # メインプラグインファイル
 ├── includes/
-│   ├── class-next-theme-json-override.php       # wp_theme_json_data_user フィルター + DB 読み書き
+│   ├── class-next-theme-json-override.php       # wp_theme_json_data_theme フィルター + DB 読み書き
 │   ├── class-next-theme-json-rest-api.php       # REST API エンドポイント
 │   └── class-next-theme-json-admin-page.php    # 管理画面ページ登録・描画
 ├── assets/
@@ -35,11 +35,11 @@ NExT-theme-json-setup/
 
 ```
 theme.json カスケード（低 → 高）
-default < blocks < theme < user ← プラグインはここに注入
+default < blocks < theme（テーマ < プラグイン ← ここに注入） < user
 ```
 
 - プラグインの設定は `wp_options`（キー: `next_theme_json_setup_overrides`）に JSON 文字列で保存
-- `wp_theme_json_data_user` フィルターで実行時にマージ → テーマ設定をオーバーライド
+- `wp_theme_json_data_theme` フィルターで実行時にテーマの theme.json の上へマージ → テーマ設定をオーバーライド（user レベルだとブロックエディターが REST から取得する設定に反映されないため。v0.6.0 で user → theme に変更）
 - `WP_Theme_JSON_Data::update_with()` を使用
 
 ### REST API
@@ -83,3 +83,4 @@ default < blocks < theme < user ← プラグインはここに注入
 | 2026-08-09 | WordPress 標準の翻訳ファイルに準拠した多言語対応を追加（v0.5.0、ブランチ `feature/i18n-support`）。PHP: rest-api.php の未ラップだった 5 文字列を `__()`/`sprintf()` で修正。JS: `admin.js` の全文字列（カテゴリ/設定ラベル・説明など約 120 件）を `wp.i18n.__()`/`sprintf()` でラップし、`wp-i18n` をスクリプト依存に追加、`wp_set_script_translations()` を登録。`languages/` に `.pot`（147 msgid）と英語翻訳一式（`.po`/`.mo`/JS 翻訳 JSON）を同梱。**重要な発見**: `wp i18n make-json` は本プラグインの構成（`wp_set_script_translations()` に明示 `$path` あり）では不正なファイル名（md5 ハッシュベース）を生成するバグがあり、WordPress コアが実際に探すのは `{domain}-{locale}-{スクリプトハンドル}.json` 形式のため手動リネームが必要（SPEC.md に手順を明記）。テスト環境の課題: PHPUnit Integration テストはプラグインを muplugins_loaded で直接 require するため `WP_Textdomain_registry` が Domain Path を認識できず JIT 自動読み込みが機能しない → `load_textdomain()` を明示的に呼んで翻訳内容を検証する方式に変更（実サイトでの JIT 動作は wp eval・e2e で別途確認）。wp-env の開発/テスト環境はソース言語（日本語）に合わせ `ja` に固定（既存 e2e テストの日本語表示前提を維持）、英語表示の確認は wp-cli 経由でサイト言語を一時切り替えする専用 e2e テストを追加（ブラウザ UI 経由のフォーム操作は不安定だったため `child_process` 経由の wp-cli 呼び出しに変更）。README.md / README.en.md / SPEC.md に翻訳ファイルの構成・新規言語の追加手順を記載。 |
 | 2026-10-30 | WordPress 7.2（beta3）の theme.json 変更点に対応（v0.6.0、ブランチ `feature/wp-7-2-support`）。Make Core「Roadmap to 7.2」と、ローカル 7.2-beta3 コアの `WP_Theme_JSON::VALID_SETTINGS` / `VALID_STYLES` / `@since 7.2.0` 注記で裏取り。admin.js のトグルを 48→54 に拡充: `background.backgroundClip`・`typography.textShadow`・`typography.defaultTextShadowPresets`（7.2）、`position.fixed`（7.2 でビューポート別指定に対応）、未対応だった `dimensions.width` / `height`（7.0）。`typography.textIndent`（`"subsequent"` / `"all"` / `false`）は文字列値のため、設定単位の `type: 'select'` と `buildSelectSettingRow()` を新設してセレクトボックスで編集。トグル行はテーマ値が配列（`backgroundClip: ["text"]` など）でも有効表示になるよう `isSettingEnabled()` / `formatSettingValue()` を追加。コアの 7.2 `theme.json` と突き合わせ、既存の `wpDefault` の誤り 6 件を修正（`background.gradient`・`color.heading` / `button` / `caption`・`typography.letterSpacing` を true、`color.link` を false）。`elements.label`・`textInput` / `select` の状態指定・`textShadowPresets` などの styles／プリセットは Raw JSON モード対応とし、SPEC.md に追記。翻訳: `.pot` 再生成・英語 `.po`/`.mo`/JS JSON を更新（17 msgid 追加）。**注意**: `wp i18n make-json` の出力 JSON の `source` が `assets/js/a.js` と不正になったため、リネームに加えて `assets/js/admin.js` に手動で修正した。e2e テストを 1 件追加（textIndent セレクト）。 |
 | 2026-10-30 | issue #6〜#8 の残作業（v0.6.0 のまま）。#8: `blockGap` の `wpDefault` を `null` にし「未設定（テーマが対応していない扱い）」を表示、説明文に true/false/未設定の違いを明記。`appearanceTools` はコアの `do_opt_in_into_settings()` が origin ごとに未指定項目だけを true にする仕様のため、実効値を「上書き → 外観ツール（上書き側）→ テーマ → 外観ツール（テーマ側）→ WP デフォルト」の順で求める `getInheritedValue()` と `APPEARANCE_TOOLS_OPT_INS`（コア定数と一致）を追加（上書き側で ON にするとテーマの明示 false も true になることを wp-env 7.2-beta3 で確認）。#6: SPEC.md に textShadowPresets の CSS クラス、Group の縦横別 blockGap、position のビューポート別指定、7.2 の挙動変更を追記。**blockGap の注意は issue の想定と異なり、プリセット参照（`var:preset|spacing|50`）も `var(...)` に変換済みのため除外される**ことを 7.2-beta3 で確認（列数＋最小列幅を両方指定した grid の列幅計算で 0.5em にフォールバック）。検証は `.wp-env.override.json` で `core` を 7.2-beta3 の zip に切り替えて実施（dev/tests 両方が切り替わり、`wp core update-db` が必要）。**未解決**: ブロックテーマでは投稿エディターも `GlobalStylesRenderer` が REST（`/wp/v2/global-styles/themes/{stylesheet}` + ユーザー CPT の生データ）から `__experimentalFeatures` を再計算するため、`wp_theme_json_data_user` で注入した上書き設定がエディターの操作欄に反映されない（フロントの CSS と PHP 側の設定には反映される）。e2e テストを 1 件追加。 |
+| 2026-10-30 | 上書きの注入先を user レベル（`wp_theme_json_data_user`）から theme レベル（`wp_theme_json_data_theme`）に変更（v0.6.0）。前項の未解決事項（ブロックテーマのエディターが REST `/wp/v2/global-styles/themes/{stylesheet}` から設定を作り直すため、user レベルの上書きが操作欄に反映されない）への対応。この REST は theme レベルまでをマージして返すため、theme レベルに注入すればエディターにも反映される。優先順位は「テーマ（子テーマ・テーマサポート含む）< プラグイン < サイトエディターでユーザーが保存したグローバルスタイル」に変わる（README / SPEC に明記）。7.2-beta3 の投稿エディターで確認: `backgroundClip: true` で「Clip」表示、`textShadow: false` で「Text shadow」非表示、`defaultTextShadowPresets: false` で Light / Strong が消え上書きで定義したプリセットのみ表示。フロント CSS への反映も確認。Integration テストを 2 件追加（theme レベルへの登録、REST のテーマ用グローバルスタイルへの反映。旧実装では後者が失敗することを確認済み）。注意: Integration テストはテスト用 DB を作り直すため、続けて e2e を流す前に `wp plugin activate` と `wp site switch-language ja` が必要。 |

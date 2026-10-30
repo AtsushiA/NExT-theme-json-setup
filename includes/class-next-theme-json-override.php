@@ -2,11 +2,16 @@
 /**
  * theme.json オーバーライド
  *
- * wp_theme_json_data_user フィルターを使って、プラグインが保存した設定を
- * テーマの theme.json より高い優先度で注入する。
+ * wp_theme_json_data_theme フィルターを使って、プラグインが保存した設定を
+ * テーマの theme.json の上に重ねて注入する。
  *
  * WordPress theme.json カスケード（低 → 高）:
- *   default < blocks < theme < user ← ここに注入。
+ *   default < blocks < theme（テーマ < プラグイン ← ここに注入） < user
+ *
+ * theme レベルに注入するのは、ブロックエディターが REST API
+ * （/wp/v2/global-styles/themes/{stylesheet}）から取得する設定にも反映させるため。
+ * このエンドポイントは theme レベルまでをマージして返し、user レベルのフィルターは通らない。
+ * サイトエディターでユーザーが保存したグローバルスタイル（user レベル）はプラグインの設定より優先される。
  *
  * @package NExT_Theme_Json_Setup
  */
@@ -33,11 +38,11 @@ class Next_Theme_Json_Override {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'wp_theme_json_data_user', array( $this, 'apply_overrides' ) );
+		add_filter( 'wp_theme_json_data_theme', array( $this, 'apply_overrides' ) );
 	}
 
 	/**
-	 * プラグインの設定を user レベルの theme.json に注入する。
+	 * プラグインの設定を theme レベルの theme.json に重ねて注入する。
 	 *
 	 * @param WP_Theme_JSON_Data $theme_json theme.json データオブジェクト。
 	 * @return WP_Theme_JSON_Data

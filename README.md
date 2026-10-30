@@ -24,10 +24,12 @@
 WordPress の theme.json にはカスケード（優先順位）があります。
 
 ```
-default < blocks < theme < user  ← このプラグインはここに注入
+default < blocks < theme（テーマ < このプラグイン） < user
 ```
 
-プラグインは `wp_theme_json_data_user` フィルターを使い、保存済みの設定を最高優先度で適用します。テーマの `theme.json` ファイルは一切変更しません。
+プラグインは `wp_theme_json_data_theme` フィルターを使い、保存済みの設定をテーマの `theme.json` の上に重ねて適用します。テーマの `theme.json` ファイルは一切変更しません。
+
+theme レベルに注入することで、ブロックエディター（REST API `/wp/v2/global-styles/themes/{テーマ}` から設定を取得）の操作欄にも設定が反映されます。サイトエディターでユーザーが保存したグローバルスタイル（user レベル）は、このプラグインの設定より優先されます。
 
 ---
 

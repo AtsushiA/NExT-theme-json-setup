@@ -24,10 +24,12 @@ A WordPress plugin that lets you view, edit, and manage the active theme's `them
 theme.json in WordPress has a cascade (priority order):
 
 ```
-default < blocks < theme < user  ← this plugin injects here
+default < blocks < theme (theme < this plugin) < user
 ```
 
-The plugin uses the `wp_theme_json_data_user` filter to apply saved settings at the highest priority. The theme's `theme.json` file itself is never modified.
+The plugin uses the `wp_theme_json_data_theme` filter to layer saved settings on top of the theme's `theme.json`. The theme's `theme.json` file itself is never modified.
+
+Injecting at the theme level makes the settings take effect in the block editor's controls as well (the editor fetches settings from the REST API `/wp/v2/global-styles/themes/{theme}`). Global styles that users save in the Site Editor (user level) take precedence over this plugin's settings.
 
 ---
 
