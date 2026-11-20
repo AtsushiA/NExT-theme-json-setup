@@ -108,14 +108,14 @@ default < blocks < theme（テーマ < このプラグイン） < user
 
 #### WordPress 7.2 での挙動の変更（Raw JSON で書く場合の注意）
 
-7.2-beta3 で実際に確認した内容。
+7.2-beta3 で確認し、7.2-RC1 で再確認した内容。
 
-- **grid レイアウトの列幅計算では、`(` を含む blockGap が使われない**
+- **grid レイアウトの列幅計算では、`clamp()` などの関数を含む blockGap が使われない**
   - 対象: `styles.spacing.blockGap` と `styles.blocks.{ブロック名}.spacing.blockGap`（ブロックごとのレイアウト CSS を作る際のフォールバック値として参照される）
-  - `wp_sanitize_block_gap_value()` が `(` `&` `=` `}` `/*` を含む値を除外するため、`clamp()` / `calc()` / `var(--…)` は捨てられ、既定の `0.5em` が使われる
-  - **プリセット参照（`var:preset|spacing|50`）も影響を受ける**。グローバルスタイルでは `var(--wp--preset--spacing--50)` に変換済みのため `(` を含む
-  - 影響が出るのは、列数（`columnCount`）と最小列幅（`minimumColumnWidth`）を両方指定した grid の列幅計算（`(100% - (0.5em * (列数 - 1))) / 列数`）。`:root :where(.is-layout-grid){gap: …}` などの通常の gap 出力には `clamp()` やプリセットもそのまま使われる
-  - 列幅計算にも反映させたい場合は `3rem` のような単純な長さで指定する
+  - `wp_sanitize_block_gap_value()` が `(` `&` `=` `}` `/*` を含む値を除外するため、`clamp()` / `calc()` は捨てられ、既定の `0.5em` が使われる
+  - **プリセット参照（`var:preset|spacing|50`）と単独の `var(--…)` は使える（RC1 から）**。RC1 で `var(--名前)` だけの値は例外として通すようになった。beta3 までは、グローバルスタイルで `var(--wp--preset--spacing--50)` に変換済みのプリセット参照も `(` を含むため除外されていた
+  - 影響が出るのは、列数（`columnCount`）と最小列幅（`minimumColumnWidth`）を両方指定した grid の列幅計算（`(100% - (0.5em * (列数 - 1))) / 列数`）。`:root :where(.is-layout-grid){gap: …}` などの通常の gap 出力には `clamp()` もそのまま使われる
+  - 列幅計算にも反映させたい場合は `3rem` のような単純な長さか、スペーシングプリセットで指定する
 - **プリセット参照のスラッグがケバブケースに揃えられる** — 例: `var:preset|font-family|n27` は `--wp--preset--font-family--n-27` を指す（以前は存在しない CSS 変数を指していた）
 - **形の違う値は無視される** — 例: `"fontFamilies": ["Inter"]` のような値を書いても PHP の致命的エラーにならず、その値だけが捨てられる
 
