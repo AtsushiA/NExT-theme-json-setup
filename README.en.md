@@ -2,6 +2,8 @@
 
 English | [日本語](README.md)
 
+[![Try in WordPress Playground](https://img.shields.io/badge/Try%20in-WordPress%20Playground-3858e9?logo=wordpress)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/AtsushiA/NExT-theme-json-setup/main/blueprint.json)
+
 A WordPress plugin that lets you view, edit, and manage the active theme's `theme.json` settings from the admin GUI.
 
 ---
