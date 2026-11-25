@@ -69,6 +69,7 @@ jobs:
             --exclude='.editorconfig' \
             --exclude='CLAUDE.md' \
             --exclude='SPEC.md' \
+            --exclude='blueprint.json' \
             ./ "${PLUGIN_SLUG}/"
           zip -r "${PLUGIN_SLUG}-${TAG_VERSION}.zip" "${PLUGIN_SLUG}/"
 

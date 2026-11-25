@@ -22,3 +22,4 @@ phpunit.xml.dist
 playwright.config.ts
 CLAUDE.md
 SPEC.md
+blueprint.json

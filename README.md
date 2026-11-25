@@ -2,6 +2,8 @@
 
 [English](README.en.md) | 日本語
 
+[![Try in WordPress Playground](https://img.shields.io/badge/Try%20in-WordPress%20Playground-3858e9?logo=wordpress)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/AtsushiA/NExT-theme-json-setup/main/blueprint.json)
+
 有効化されているテーマの `theme.json` 設定を WordPress 管理画面から GUI で管理できるプラグインです。
 
 ---
